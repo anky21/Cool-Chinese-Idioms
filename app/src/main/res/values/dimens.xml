@@ -2,4 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Main Screen Tab -->
+    <dimen name="tab_label">12sp</dimen>
+    <dimen name="custom_tab_layout_height">60dp</dimen>
 </resources>
