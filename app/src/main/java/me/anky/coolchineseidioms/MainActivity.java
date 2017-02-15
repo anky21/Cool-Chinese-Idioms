@@ -13,9 +13,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private TabLayout tabLayout;
     private int[] tabIcons = {
-            R.drawable.ic_tab_home,
-            R.drawable.ic_tab_categories,
-            R.drawable.ic_tab_idiom_bank
+            R.drawable.tab_icon_home,
+            R.drawable.tab_icon_categories,
+            R.drawable.tab_icon_idiom_bank
     };
 
     @Override

@@ -10,5 +10,6 @@
     <color name="primary_text_color">#212121</color>
     <color name="secondary_text_color">#757575</color>
     <color name="text_or_icons_color">#FFFFFF</color>
+    <color name="tab_icon_color">#4CAF50</color>
 
 </resources>

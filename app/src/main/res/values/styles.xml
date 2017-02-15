@@ -13,7 +13,6 @@
         <item name="tabIndicatorColor">@android:color/white</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
         <item name="tabIndicatorHeight">0dp</item>
-        <item name="tabBackground">@color/color_light_primary</item>
         <item name="tabMaxWidth">0dp</item>
         <item name="tabGravity">fill</item>
         <item name="tabMode">fixed</item>
