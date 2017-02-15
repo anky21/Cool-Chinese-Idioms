@@ -1,5 +1,6 @@
 package me.anky.coolchineseidioms;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,9 +21,13 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         // Create an adapter that controls the display of fragments
-        MainScreenFragmentAdapter adapter = new MainScreenFragmentAdapter(getSupportFragmentManager());
+        MainScreenFragmentAdapter adapter = new MainScreenFragmentAdapter(this, getSupportFragmentManager());
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
+
+        // Find the tab layout that shows the tabs
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.main_screen_tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }

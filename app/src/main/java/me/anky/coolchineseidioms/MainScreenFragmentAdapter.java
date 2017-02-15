@@ -1,5 +1,6 @@
 package me.anky.coolchineseidioms;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,8 +15,11 @@ public class MainScreenFragmentAdapter extends FragmentPagerAdapter{
     // Total number of pages on the Main screen
     static final int NUM_ITEMS = 3;
 
-    public MainScreenFragmentAdapter(FragmentManager fm){
+    private Context mContext;
+
+    public MainScreenFragmentAdapter(Context context,FragmentManager fm){
         super(fm);
+        mContext = context;
     }
 
 
@@ -36,5 +40,16 @@ public class MainScreenFragmentAdapter extends FragmentPagerAdapter{
     @Override
     public int getCount() {
         return NUM_ITEMS;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (position == 0) {
+            return mContext.getString(R.string.tab_home_title);
+        } else if (position == 1) {
+            return mContext.getString(R.string.tab_categories_title);
+        } else {
+            return mContext.getString(R.string.tab_idiom_bank_title);
+        }
     }
 }

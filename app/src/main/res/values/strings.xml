@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Cool Chinese Idioms</string>
 
+    <!-- Titles for Main Screen tabs -->
+    <string name="tab_home_title">Home</string>
+    <string name="tab_categories_title">Categories</string>
+    <string name="tab_idiom_bank_title">Idiom Bank</string>
+
 </resources>
