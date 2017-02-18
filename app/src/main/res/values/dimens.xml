@@ -6,4 +6,11 @@
     <!-- Main Screen Tab -->
     <dimen name="tab_label">12sp</dimen>
     <dimen name="custom_tab_layout_height">60dp</dimen>
+
+    <!-- Margins and paddings -->
+    <dimen name="margin_0dp">0dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+
+    <!-- CardView -->
+    <dimen name="cardview_corner_radius">4dp</dimen>
 </resources>
