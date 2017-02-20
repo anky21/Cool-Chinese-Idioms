@@ -29,6 +29,8 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
 
+        new EndpointsAsyncTask().execute(getActivity());
+
         // Change background colour of the CardView
         cardView.setCardBackgroundColor(Color.CYAN);
 

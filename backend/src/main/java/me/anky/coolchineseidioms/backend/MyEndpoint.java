@@ -10,7 +10,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 
-import javax.inject.Named;
+import me.anky.coolchineseidioms.IdiomProvider;
 
 /**
  * An endpoint class we are exposing
@@ -27,12 +27,13 @@ import javax.inject.Named;
 public class MyEndpoint {
 
     /**
-     * A simple endpoint method that takes a name and says Hi back
+     * A simple endpoint method that fetches an idiom from the Java library
      */
-    @ApiMethod(name = "sayHi")
-    public MyBean sayHi(@Named("name") String name) {
+    @ApiMethod(name = "fetchIdiom")
+    public MyBean fetchIdiom() {
+        String idiom = IdiomProvider.getIdiom();
         MyBean response = new MyBean();
-        response.setData("Hi, " + name);
+        response.setData(idiom);
 
         return response;
     }
