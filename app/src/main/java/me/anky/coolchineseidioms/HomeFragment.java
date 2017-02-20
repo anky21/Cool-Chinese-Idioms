@@ -18,8 +18,6 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.card_view)
     CardView cardView;
 
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -33,7 +31,6 @@ public class HomeFragment extends Fragment {
 
         // Change background colour of the CardView
         cardView.setCardBackgroundColor(Color.CYAN);
-
 
         return rootView;
     }

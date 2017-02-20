@@ -6,16 +6,16 @@
         android:layout_width="match_parent"
         android:layout_height="128dp"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_8dp"
         android:layout_marginBottom="@dimen/margin_8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         card_view:cardCornerRadius="@dimen/cardview_corner_radius">
 
         <LinearLayout
             android:id="@+id/card_view_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/margin_8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/margin_8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -39,8 +39,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:text="一鸣惊人" />
+                    android:text="一鸣惊人"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <!-- Include the layout for playing audio icon -->
                 <include layout="@layout/play_sound_icon" />

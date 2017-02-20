@@ -6,6 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -13,6 +18,8 @@ import android.view.ViewGroup;
  */
 public class CategoriesFragment extends Fragment {
 
+    @BindView(R.id.category_listview)
+    ListView listView;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -23,7 +30,23 @@ public class CategoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
+        ButterKnife.bind(this, rootView);
+
+        // Create a list of Categories
+        String[] courses = new String[]{
+                "Category 1",
+                "Category 2",
+                "Category 3",
+                "Category 4",
+                "Category 5",
+                "Category 6"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, courses);
+        listView.setAdapter(adapter);
+
+        return rootView;
     }
 
 }
