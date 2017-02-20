@@ -9,14 +9,10 @@ public class IdiomProvider {
 
         // Collection of the idioms
         List<String> jokes = new ArrayList<>();
-        jokes.add("Yi Ming Jing Ren");
-        jokes.add("Hua Long Dian Jing");
-        jokes.add("Yi Xin Yi Yi");
-        jokes.add("Xi Qi Yang Yang");
-        jokes.add("Hao Shi Cheng Shuang");
-//        jokes.add("ä¸€");
-//        jokes.add("äºŒ");
-//        jokes.add("ä¸‰");
+        jokes.add("Ò»Ãù¾ªÈË");
+        jokes.add("ºÃÊÂ³ÉË«");
+        jokes.add("Ò»ĞÄÒ»Òâ");
+        jokes.add("×ø¾®¹ÛÌì");
 
         // Randomly create an integer according to the size of the String array
         int rnd = new Random().nextInt(jokes.size());
