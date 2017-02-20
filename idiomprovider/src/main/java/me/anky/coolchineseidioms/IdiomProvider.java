@@ -14,6 +14,9 @@ public class IdiomProvider {
         jokes.add("Yi Xin Yi Yi");
         jokes.add("Xi Qi Yang Yang");
         jokes.add("Hao Shi Cheng Shuang");
+//        jokes.add("一");
+//        jokes.add("二");
+//        jokes.add("三");
 
         // Randomly create an integer according to the size of the String array
         int rnd = new Random().nextInt(jokes.size());

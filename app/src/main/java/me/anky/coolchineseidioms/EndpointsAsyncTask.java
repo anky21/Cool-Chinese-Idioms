@@ -2,7 +2,6 @@ package me.anky.coolchineseidioms;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -18,12 +17,13 @@ import me.anky.coolchineseidioms.backend.myApi.MyApi;
  * anky25@gmail.com
  */
 
-class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
+class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    public OnTaskCompleted listener = null;
 
     @Override
-    protected String doInBackground(Context... params) {
+    protected String doInBackground(Void... params) {
         if (myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -42,7 +42,7 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
             myApiService = builder.build();
         }
 
-        context = params[0];
+//        context = params[0];
 
         try {
             return myApiService.fetchIdiom().execute().getData();
@@ -51,8 +51,13 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
         }
     }
 
+    public EndpointsAsyncTask(OnTaskCompleted listener){
+        this.listener = listener;
+    }
+
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        listener.onTaskCompleted(result);
     }
 }

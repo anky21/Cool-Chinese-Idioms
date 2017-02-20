@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,9 +15,14 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnTaskCompleted{
     @BindView(R.id.card_view)
     CardView cardView;
+
+    @BindView(R.id.idiom_of_the_day)
+    TextView idiomTv;
+
+    private String idiomPinyin = "";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -29,7 +35,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
 
-        new EndpointsAsyncTask().execute(getActivity());
+        new EndpointsAsyncTask(this).execute();
 
         // Change background colour of the CardView
         cardView.setCardBackgroundColor(Color.CYAN);
@@ -37,4 +43,9 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onTaskCompleted(String result) {
+        idiomPinyin = result;
+        idiomTv.setText(idiomPinyin);
+    }
 }
