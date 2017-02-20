@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CoolChineseIdioms.iml" filepath="$PROJECT_DIR$/CoolChineseIdioms.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idiomprovider/idiomprovider.iml" filepath="$PROJECT_DIR$/idiomprovider/idiomprovider.iml" />
     </modules>
   </component>
 </project>

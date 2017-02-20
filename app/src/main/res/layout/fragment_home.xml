@@ -22,7 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingBottom="@dimen/margin_8dp"
             android:paddingTop="@dimen/margin_8dp"
-            android:text="Courses"
+            android:text="@string/course_list_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
