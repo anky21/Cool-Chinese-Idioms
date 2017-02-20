@@ -5,19 +5,47 @@
     tools:context="me.anky.coolchineseidioms.HomeFragment">
 
     <LinearLayout
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_16dp"
+        android:paddingLeft="@dimen/margin_8dp"
+        android:paddingRight="@dimen/margin_8dp">
 
         <!-- CardView: Idiom of the Day -->
-        <include layout="@layout/cardview_layout"/>
+        <include layout="@layout/cardview_layout" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Courses" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/margin_8dp"
+            android:paddingTop="@dimen/margin_8dp"
+            android:text="Courses"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
+        <TextView
+            style="@style/CourseStyle"
+            android:text="@string/course_most_commonly_used" />
+
+        <include layout="@layout/divider_view" />
+
+        <TextView
+            style="@style/CourseStyle"
+            android:text="@string/course_beginner_level" />
+
+        <include layout="@layout/divider_view" />
+
+        <TextView
+            style="@style/CourseStyle"
+            android:text="@string/course_intermediate_level" />
+
+        <include layout="@layout/divider_view" />
+
+        <TextView
+            style="@style/CourseStyle"
+            android:text="@string/course_advanced_level" />
     </LinearLayout>
 
 </ScrollView>

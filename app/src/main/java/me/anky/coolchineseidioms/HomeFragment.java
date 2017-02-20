@@ -1,6 +1,5 @@
 package me.anky.coolchineseidioms;
 
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -21,10 +19,10 @@ public class HomeFragment extends Fragment {
     CardView cardView;
 
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,7 +31,9 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
 
+        // Change background colour of the CardView
         cardView.setCardBackgroundColor(Color.CYAN);
+
 
         return rootView;
     }

@@ -6,13 +6,15 @@
         android:layout_width="match_parent"
         android:layout_height="128dp"
         android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
         card_view:cardCornerRadius="@dimen/cardview_corner_radius">
 
         <LinearLayout
             android:id="@+id/card_view_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_8dp"
+            android:padding="@dimen/margin_8dp"
             android:orientation="vertical">
 
             <TextView

@@ -7,4 +7,10 @@
     <string name="tab_idiom_bank_title">Idiom Bank</string>
     <string name="idiom_of_the_day">Idiom of the Day</string>
 
+    <!-- Course choices -->
+    <string name="course_most_commonly_used">Most Commonly Used</string>
+    <string name="course_beginner_level">Beginner Level</string>
+    <string name="course_intermediate_level">Intermediate Level</string>
+    <string name="course_advanced_level">Advanced Level</string>
+
 </resources>

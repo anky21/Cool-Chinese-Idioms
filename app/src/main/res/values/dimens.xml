@@ -10,7 +10,10 @@
     <!-- Margins and paddings -->
     <dimen name="margin_0dp">0dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
 
     <!-- CardView -->
     <dimen name="cardview_corner_radius">4dp</dimen>
+
+    <dimen name="divider_view_height">1dp</dimen>
 </resources>
