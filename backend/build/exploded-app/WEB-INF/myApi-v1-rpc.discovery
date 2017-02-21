@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"ODRTh3xaRR64wpeXJSlF33HMN-0/GDNxNCugQJSVZJM1WZf_NZaVtHQ\"",
+ "etag": "\"ODRTh3xaRR64wpeXJSlF33HMN-0/MviIR8OtkvzXtYvFrs9UwrcEO4c\"",
  "discoveryVersion": "v1",
  "id": "myApi:v1",
  "name": "myApi",
@@ -13,8 +13,8 @@
   "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "protocol": "rpc",
- "rootUrl": "https://myApplicationId.appspot.com/_ah/api/",
- "rpcUrl": "https://myApplicationId.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://chineseidioms-159403.appspot.com/_ah/api/",
+ "rpcUrl": "https://chineseidioms-159403.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ODRTh3xaRR64wpeXJSlF33HMN-0/GDNxNCugQJSVZJM1WZf_NZaVtHQ\"",
+ "etag": "\"ODRTh3xaRR64wpeXJSlF33HMN-0/MviIR8OtkvzXtYvFrs9UwrcEO4c\"",
  "discoveryVersion": "v1",
  "id": "myApi:v1",
  "name": "myApi",
@@ -13,9 +13,9 @@
   "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "protocol": "rest",
- "baseUrl": "https://myApplicationId.appspot.com/_ah/api/myApi/v1/",
+ "baseUrl": "https://chineseidioms-159403.appspot.com/_ah/api/myApi/v1/",
  "basePath": "/_ah/api/myApi/v1/",
- "rootUrl": "https://myApplicationId.appspot.com/_ah/api/",
+ "rootUrl": "https://chineseidioms-159403.appspot.com/_ah/api/",
  "servicePath": "myApi/v1/",
  "batchPath": "batch",
  "parameters": {
