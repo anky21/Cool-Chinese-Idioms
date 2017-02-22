@@ -2,6 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
+        android:id="@+id/sound_play_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/ic_round_background">
