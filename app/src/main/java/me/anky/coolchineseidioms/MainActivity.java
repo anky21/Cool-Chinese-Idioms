@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+
 import com.facebook.stetho.Stetho;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    IdiomCollectionDbHelper dbHelper = null;
     private TabLayout tabLayout;
     private int[] tabIcons = {
             R.drawable.tab_icon_home,
@@ -22,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Copy prepopulated database to internal storage
+        dbHelper = new IdiomCollectionDbHelper(this);
+        try{
+            dbHelper.prepareDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Debugging: testing databases
         Stetho.initializeWithDefaults(this);
