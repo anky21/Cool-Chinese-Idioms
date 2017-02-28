@@ -13,5 +13,6 @@
     <string name="course_intermediate_level">Intermediate Level</string>
     <string name="course_advanced_level">Advanced Level</string>
     <string name="course_list_title">Courses</string>
+    <string name="all_idioms_course">All Idioms</string>
 
 </resources>

@@ -32,8 +32,10 @@
         <include layout="@layout/divider_view" />
 
         <TextView
+            android:id="@+id/beginner_level_course"
             style="@style/CourseStyle"
-            android:text="@string/course_beginner_level" />
+            android:text="@string/course_beginner_level"
+            />
 
         <include layout="@layout/divider_view" />
 
@@ -46,6 +48,13 @@
         <TextView
             style="@style/CourseStyle"
             android:text="@string/course_advanced_level" />
+
+        <include layout="@layout/divider_view" />
+
+        <TextView
+            android:id="@+id/all_idioms_course"
+            style="@style/CourseStyle"
+            android:text="@string/all_idioms_course" />
     </LinearLayout>
 
 </ScrollView>

@@ -1,6 +1,7 @@
 package me.anky.coolchineseidioms;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -41,6 +42,12 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
 
     @BindView(R.id.sound_play_icon)
     ImageView soundPlayIcon;
+
+    @BindView(R.id.beginner_level_course)
+    TextView beginnerLevelCourse;
+
+    @BindView(R.id.all_idioms_course)
+    TextView allIdiomsCourse;
 
     private String idiom = "";
 
@@ -140,6 +147,14 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
                     // Change audio icon
                     Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
                 }
+            }
+        });
+
+        allIdiomsCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -17,6 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".IdiomCollectionProvider"
+            android:authorities="me.anky.coolchineseidioms"
+            android:exported="false" />
+
+        <activity android:name=".IdiomListActivity"></activity>
     </application>
 
 </manifest>
