@@ -125,95 +125,15 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         cardView.setCardBackgroundColor(Color.WHITE);
 
         soundPlayIcon.setTag(R.drawable.ic_play_sound);
+        // Set up OnClickListener for sound play button
+        soundPlayIconFrame.setOnClickListener(mSoundPlayIconClickListener);
 
-        soundPlayIconFrame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ((int)soundPlayIcon.getTag() == R.drawable.ic_play_sound && length == 0) {
-                    // Release the MediaPlayer if it currently exists
-                    releaseMediaPlayer();
-                    int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-                            AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                        // Create and setup the {@link MediaPlayer}
-                        mediaPlayer = MediaPlayer.create(getContext(), R.raw.duiniutanqin);
-
-                        // Start playing the audio file
-                        mediaPlayer.start();
-
-                        // Change audio icon
-                        Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
-
-                        // Setup a listener to stop and release the media player after playing
-                        mediaPlayer.setOnCompletionListener(mCompletionListener);
-                    }
-                } else if ((int)soundPlayIcon.getTag() == R.drawable.ic_play_sound && length != 0){
-                    // Start from the saved position
-                    mediaPlayer.seekTo(length);
-                    mediaPlayer.start();
-
-                    // Change audio icon
-                    Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
-                } else if(mediaPlayer.isPlaying()) {
-                    // Save the current position
-                    length = mediaPlayer.getCurrentPosition();
-                    mediaPlayer.pause();
-
-                    // Change audio icon
-                    Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
-                }
-            }
-        });
-
-
-        // Set up the click action for common idioms course
-        commonIdiomsCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, COMMON);
-                startActivity(intent);
-            }
-        });
-
-        // Set up the click action for beginner level course
-        beginnerLevelCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, BEGINNER);
-                startActivity(intent);
-            }
-        });
-
-        // Set up the click action for intermediate level course
-        intermediateLevelCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, INTERMEDIATE);
-                startActivity(intent);
-            }
-        });
-
-        // Set up the click action for advanced level course
-        advancedLevelCoruse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, ADVANCED);
-                startActivity(intent);
-            }
-        });
-
-        // Set up the click action for all idioms course
-        allIdiomsCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-                startActivity(intent);
-            }
-        });
+        // Set up click actions for courses
+        commonIdiomsCourse.setOnClickListener(mCommonIdiomsClickListener);
+        beginnerLevelCourse.setOnClickListener(mBeginnerLevelClickListener);
+        intermediateLevelCourse.setOnClickListener(mIntermediateLevelClickListener);
+        advancedLevelCoruse.setOnClickListener(mAdvancedLevelClickListener);
+        allIdiomsCourse.setOnClickListener(mAllIdiomsClickListener);
 
         return rootView;
     }
@@ -221,6 +141,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
     @Override
     public void onPause() {
         super.onPause();
+        length = 0;
         releaseMediaPlayer();
     }
 
@@ -249,4 +170,92 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             audioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
+
+    // Click listener for common idioms course
+    private View.OnClickListener mCommonIdiomsClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, COMMON);
+            startActivity(intent);
+        }
+    };
+
+    // Click listener for beginner level course
+    private View.OnClickListener mBeginnerLevelClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, BEGINNER);
+            startActivity(intent);
+        }
+    };
+
+    // Click listener for intermediate level course
+    private View.OnClickListener mIntermediateLevelClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, INTERMEDIATE);
+            startActivity(intent);
+        }
+    };
+
+    // Click listener for advanced level course
+    private View.OnClickListener mAdvancedLevelClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, ADVANCED);
+            startActivity(intent);
+        }
+    };
+
+    // Click listener for all idioms course
+    private View.OnClickListener mAllIdiomsClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener mSoundPlayIconClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length == 0) {
+                // Release the MediaPlayer if it currently exists
+                releaseMediaPlayer();
+                int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                        AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    // Create and setup the {@link MediaPlayer}
+                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.duiniutanqin);
+
+                    // Start playing the audio file
+                    mediaPlayer.start();
+
+                    // Change audio icon
+                    Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+
+                    // Setup a listener to stop and release the media player after playing
+                    mediaPlayer.setOnCompletionListener(mCompletionListener);
+                }
+            } else if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length != 0) {
+                // Start from the saved position
+                mediaPlayer.seekTo(length);
+                mediaPlayer.start();
+
+                // Change audio icon
+                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+            } else if (mediaPlayer.isPlaying()) {
+                // Save the current position
+                length = mediaPlayer.getCurrentPosition();
+                mediaPlayer.pause();
+
+                // Change audio icon
+                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+            }
+        }
+    };
 }
