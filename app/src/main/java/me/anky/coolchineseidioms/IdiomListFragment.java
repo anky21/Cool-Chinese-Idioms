@@ -2,6 +2,7 @@ package me.anky.coolchineseidioms;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.widget.ListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+
+import static me.anky.coolchineseidioms.Utilities.IDIOM_FEW_COLUMNS;
 
 /**
  * Created by Anky An on 1/03/2017.
@@ -25,7 +29,7 @@ public class IdiomListFragment extends Fragment implements
     private static final int LOADER = 0;
 
     @BindView(R.id.list)
-            ListView listView;
+    ListView listView;
 
     IdiomListCursorAdapter mIdiomListCursorAdapter;
 
@@ -35,6 +39,7 @@ public class IdiomListFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Kick off the loader
         getActivity().getLoaderManager().initLoader(LOADER, null, this);
     }
@@ -53,14 +58,24 @@ public class IdiomListFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {
-                IdiomCollectionContract.IdiomCollectionEntry._ID,
-                IdiomCollectionContract.IdiomCollectionEntry.COLUMN_IDIOM,
-                IdiomCollectionContract.IdiomCollectionEntry.COLUMN_AUDIO_FILE};
+        String selection = null;
+        Intent intent = getActivity().getIntent();
+        if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+            String intentExtra = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (intentExtra.equals(HomeFragment.COMMON)) {
+                selection = IdiomCollectionEntry.COLUMN_FREQUENCY + " = 1";
+            } else if (intentExtra.equals(HomeFragment.BEGINNER)){
+                selection = IdiomCollectionEntry.COLUMN_LEVEL + " = 0";
+            } else if (intentExtra.equals(HomeFragment.INTERMEDIATE)){
+                selection = IdiomCollectionEntry.COLUMN_LEVEL + " = 1";
+            }else if (intentExtra.equals(HomeFragment.ADVANCED)){
+                selection = IdiomCollectionEntry.COLUMN_LEVEL + " = 2";
+            }
+        }
         return new CursorLoader(getContext(),
-                IdiomCollectionContract.IdiomCollectionEntry.CONTENT_URI,
-                projection,
-                null,
+                IdiomCollectionEntry.CONTENT_URI,
+                IDIOM_FEW_COLUMNS,
+                selection,
                 null,
                 null);
     }

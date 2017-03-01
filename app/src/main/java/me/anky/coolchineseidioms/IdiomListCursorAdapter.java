@@ -28,19 +28,15 @@ public class IdiomListCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView rowIdTv = (TextView)view.findViewById(R.id.row_id);
         TextView idiomNameTv = (TextView)view.findViewById(R.id.idiom_name);
 
         // Find the columns of idiom attributes
-        int columnId = cursor.getColumnIndex(IdiomCollectionEntry._ID);
         int columnIdiom = cursor.getColumnIndex(IdiomCollectionEntry.COLUMN_IDIOM);
 
         // Read the idiom attributes from the Cursor
-        String rowId = cursor.getString(columnId);
         String idiomName = cursor.getString(columnIdiom);
 
         // Update TextViews with the attributes for the current idiom
-        rowIdTv.setText(rowId);
         idiomNameTv.setText(idiomName);
     }
 }

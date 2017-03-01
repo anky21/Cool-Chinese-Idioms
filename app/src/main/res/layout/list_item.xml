@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingRight="@dimen/margin_16dp"
+    android:paddingEnd="@dimen/margin_16dp"
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/row_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/idiom_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceSmall" />
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:textAppearance="?android:attr/textAppearanceListItem" />
+
+    <!-- Include the layout for playing audio icon -->
+    <include layout="@layout/play_sound_icon" />
 </LinearLayout>

@@ -31,6 +31,12 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
 
     private int length = 0;
 
+    // Tags to be sent with an intent
+    public static final String COMMON = "common";
+    public static final String BEGINNER = "beginner";
+    public static final String INTERMEDIATE = "intermediate";
+    public static final String ADVANCED = "advanced";
+
     @BindView(R.id.card_view)
     CardView cardView;
 
@@ -43,8 +49,17 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
     @BindView(R.id.sound_play_icon)
     ImageView soundPlayIcon;
 
+    @BindView(R.id.common_idioms_course)
+    TextView commonIdiomsCourse;
+
     @BindView(R.id.beginner_level_course)
     TextView beginnerLevelCourse;
+
+    @BindView(R.id.intermediate_level_course)
+    TextView intermediateLevelCourse;
+
+    @BindView(R.id.advanced_level_course)
+    TextView advancedLevelCoruse;
 
     @BindView(R.id.all_idioms_course)
     TextView allIdiomsCourse;
@@ -150,6 +165,48 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             }
         });
 
+
+        // Set up the click action for common idioms course
+        commonIdiomsCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, COMMON);
+                startActivity(intent);
+            }
+        });
+
+        // Set up the click action for beginner level course
+        beginnerLevelCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, BEGINNER);
+                startActivity(intent);
+            }
+        });
+
+        // Set up the click action for intermediate level course
+        intermediateLevelCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, INTERMEDIATE);
+                startActivity(intent);
+            }
+        });
+
+        // Set up the click action for advanced level course
+        advancedLevelCoruse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, ADVANCED);
+                startActivity(intent);
+            }
+        });
+
+        // Set up the click action for all idioms course
         allIdiomsCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
