@@ -6,17 +6,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CategoriesFragment extends Fragment {
+    private IdiomCategoryAdapter idiomCategoryAdapter;
+    private ArrayList<IdiomCategory> categoryList;
 
     @BindView(R.id.category_listview)
     ListView listView;
@@ -25,6 +30,11 @@ public class CategoriesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    IdiomCategory[] idiomCategories = {
+            new IdiomCategory("Containing Numbers", IdiomCollectionEntry.COLUMN_CONTAIN_NUMBERS + " =1"),
+            new IdiomCategory("Containing Animals", IdiomCollectionEntry.COLUMN_CONTAIN_ANIMALS + " =1"),
+            new IdiomCategory("About Seasons", IdiomCollectionEntry.COLUMN_SEASONS + " =1")
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,18 +43,9 @@ public class CategoriesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
         ButterKnife.bind(this, rootView);
 
-        // Create a list of Categories
-        String[] courses = new String[]{
-                "Category 1",
-                "Category 2",
-                "Category 3",
-                "Category 4",
-                "Category 5",
-                "Category 6"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, courses);
-        listView.setAdapter(adapter);
+        categoryList = new ArrayList<>(Arrays.asList(idiomCategories));
+        idiomCategoryAdapter = new IdiomCategoryAdapter(getActivity(), categoryList);
+        listView.setAdapter(idiomCategoryAdapter);
 
         return rootView;
     }

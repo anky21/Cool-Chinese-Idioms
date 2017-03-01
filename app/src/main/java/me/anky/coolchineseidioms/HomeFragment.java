@@ -176,7 +176,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, COMMON);
+            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_FREQUENCY + " = 1";
+            intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             startActivity(intent);
         }
     };
@@ -186,7 +187,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, BEGINNER);
+            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 0";
+            intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             startActivity(intent);
         }
     };
@@ -196,7 +198,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, INTERMEDIATE);
+            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 1";
+            intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             startActivity(intent);
         }
     };
@@ -206,7 +209,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, ADVANCED);
+            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 2";
+            intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             startActivity(intent);
         }
     };

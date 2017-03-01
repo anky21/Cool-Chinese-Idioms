@@ -3,20 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:paddingRight="@dimen/margin_16dp"
+    android:orientation="horizontal"
     android:paddingEnd="@dimen/margin_16dp"
-    android:orientation="horizontal">
+    android:paddingRight="@dimen/margin_16dp">
 
     <TextView
         android:id="@+id/idiom_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:textAppearance="?android:attr/textAppearanceListItem" />
+        style="@style/TextViewInList" />
 
     <!-- Include the layout for playing audio icon -->
     <include layout="@layout/play_sound_icon" />

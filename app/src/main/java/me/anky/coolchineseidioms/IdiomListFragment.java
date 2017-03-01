@@ -61,16 +61,7 @@ public class IdiomListFragment extends Fragment implements
         String selection = null;
         Intent intent = getActivity().getIntent();
         if (intent.hasExtra(Intent.EXTRA_TEXT)) {
-            String intentExtra = intent.getStringExtra(Intent.EXTRA_TEXT);
-            if (intentExtra.equals(HomeFragment.COMMON)) {
-                selection = IdiomCollectionEntry.COLUMN_FREQUENCY + " = 1";
-            } else if (intentExtra.equals(HomeFragment.BEGINNER)){
-                selection = IdiomCollectionEntry.COLUMN_LEVEL + " = 0";
-            } else if (intentExtra.equals(HomeFragment.INTERMEDIATE)){
-                selection = IdiomCollectionEntry.COLUMN_LEVEL + " = 1";
-            }else if (intentExtra.equals(HomeFragment.ADVANCED)){
-                selection = IdiomCollectionEntry.COLUMN_LEVEL + " = 2";
-            }
+            selection = intent.getStringExtra(Intent.EXTRA_TEXT);
         }
         return new CursorLoader(getContext(),
                 IdiomCollectionEntry.CONTENT_URI,
