@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingEnd="@dimen/margin_16dp"
@@ -9,10 +10,10 @@
 
     <TextView
         android:id="@+id/idiom_name"
+        style="@style/TextViewInList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        style="@style/TextViewInList" />
+        android:layout_weight="1" />
 
     <!-- Include the layout for playing audio icon -->
     <include layout="@layout/play_sound_icon" />

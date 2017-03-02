@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import butterknife.BindView;
@@ -52,6 +53,7 @@ public class IdiomListFragment extends Fragment implements
 
         mIdiomListCursorAdapter = new IdiomListCursorAdapter(getContext(), null);
         listView.setAdapter(mIdiomListCursorAdapter);
+        listView.setOnItemClickListener(mListViewItemClickListener);
 
         return rootView;
     }
@@ -86,4 +88,12 @@ public class IdiomListFragment extends Fragment implements
     public void onLoaderReset(Loader<Cursor> loader) {
         mIdiomListCursorAdapter.swapCursor(null);
     }
+
+    private AdapterView.OnItemClickListener mListViewItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            startActivity(intent);
+        }
+    };
 }

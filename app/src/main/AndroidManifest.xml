@@ -23,7 +23,8 @@
             android:authorities="me.anky.coolchineseidioms"
             android:exported="false" />
 
-        <activity android:name=".IdiomListActivity"></activity>
+        <activity android:name=".IdiomListActivity" />
+        <activity android:name=".DetailActivity"></activity>
     </application>
 
 </manifest>
