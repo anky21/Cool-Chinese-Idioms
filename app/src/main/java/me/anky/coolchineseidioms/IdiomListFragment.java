@@ -59,9 +59,15 @@ public class IdiomListFragment extends Fragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = null;
+        String newTitle = null;
         Intent intent = getActivity().getIntent();
         if (intent.hasExtra(Intent.EXTRA_TEXT)) {
             selection = intent.getStringExtra(Intent.EXTRA_TEXT);
+        }
+        if(intent.hasExtra(Intent.EXTRA_TITLE)){
+            newTitle = intent.getStringExtra(Intent.EXTRA_TITLE);
+            // Change the title in the toolbar
+            getActivity().setTitle(newTitle);
         }
         return new CursorLoader(getContext(),
                 IdiomCollectionEntry.CONTENT_URI,

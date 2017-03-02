@@ -1,11 +1,13 @@
 package me.anky.coolchineseidioms;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class CategoriesFragment extends Fragment {
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
@@ -46,6 +48,19 @@ public class CategoriesFragment extends Fragment {
         categoryList = new ArrayList<>(Arrays.asList(idiomCategories));
         idiomCategoryAdapter = new IdiomCategoryAdapter(getActivity(), categoryList);
         listView.setAdapter(idiomCategoryAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                IdiomCategory idiomCategory = idiomCategoryAdapter.getItem(position);
+                String selection = idiomCategory.getSelection();
+                String newTitle = idiomCategory.getCategory();
+                Intent intent = new Intent(getContext(), IdiomListActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, selection);
+                intent.putExtra(Intent.EXTRA_TITLE, newTitle);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }

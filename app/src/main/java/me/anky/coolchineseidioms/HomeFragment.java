@@ -178,6 +178,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
             String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_FREQUENCY + " = 1";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
+            String newTitle = commonIdiomsCourse.getText().toString();
+            intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
         }
     };
@@ -189,6 +191,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
             String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 0";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
+            String newTitle = beginnerLevelCourse.getText().toString();
+            intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
         }
     };
@@ -200,6 +204,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
             String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 1";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
+            String newTitle = intermediateLevelCourse.getText().toString();
+            intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
         }
     };
@@ -211,6 +217,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
             String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 2";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
+            String newTitle = advancedLevelCoruse.getText().toString();
+            intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
         }
     };
@@ -220,6 +228,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
+            String newTitle = allIdiomsCourse.getText().toString();
+            intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
         }
     };
