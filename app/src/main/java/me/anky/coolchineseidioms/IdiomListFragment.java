@@ -59,6 +59,13 @@ public class IdiomListFragment extends Fragment implements
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        // Release the mediaplayer
+        mIdiomListCursorAdapter.releaseMediaPlayer();
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = null;
         String newTitle = null;

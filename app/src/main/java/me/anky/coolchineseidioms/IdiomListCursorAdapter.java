@@ -39,9 +39,6 @@ public class IdiomListCursorAdapter extends CursorAdapter {
         View rootView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         mainViewHolder = new MainViewHolder();
 
-        mainViewHolder.soundPlayButton = (FrameLayout) rootView.findViewById(R.id.sound_play_icon_frame);
-        mainViewHolder.idiomName = (TextView) rootView.findViewById(R.id.idiom_name);
-
         rootView.setTag(mainViewHolder);
 
         return rootView;
@@ -49,7 +46,7 @@ public class IdiomListCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
-        audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
         // Find the columns of idiom attributes
         int columnIdiom = cursor.getColumnIndex(IdiomCollectionEntry.COLUMN_IDIOM);
@@ -59,6 +56,10 @@ public class IdiomListCursorAdapter extends CursorAdapter {
         String idiomName = cursor.getString(columnIdiom);
         final String audioFile = cursor.getString(columnAudio);
         final int audioId = context.getResources().getIdentifier(audioFile, "raw", context.getPackageName());
+
+        // Set the views for the ViewHolder
+        mainViewHolder.soundPlayButton = (FrameLayout) view.findViewById(R.id.sound_play_icon_frame);
+        mainViewHolder.idiomName = (TextView) view.findViewById(R.id.idiom_name);
 
         // Update TextViews with the attributes for the current idiom
         mainViewHolder.idiomName.setText(idiomName);
@@ -87,7 +88,7 @@ public class IdiomListCursorAdapter extends CursorAdapter {
     /**
      * Clean up the media player by releasing its resources.
      */
-    private void releaseMediaPlayer() {
+    public void releaseMediaPlayer() {
 
         if (mediaPlayer != null) {
             // Release its resources
@@ -106,12 +107,16 @@ public class IdiomListCursorAdapter extends CursorAdapter {
         public void onAudioFocusChange(int focusChange) {
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
                     focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
-                // Pause playback and reset player to the start of the file
-                mediaPlayer.pause();
-                mediaPlayer.seekTo(0);
+                if (mediaPlayer != null) {
+                    // Pause playback and reset player to the start of the file
+                    mediaPlayer.pause();
+                    mediaPlayer.seekTo(0);
+                }
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                // Resume playback when focus is regained.
-                mediaPlayer.start();
+                if (mediaPlayer != null) {
+                    // Resume playback when focus is regained.
+                    mediaPlayer.start();
+                }
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 // Stop playback and clean up resources
                 releaseMediaPlayer();
