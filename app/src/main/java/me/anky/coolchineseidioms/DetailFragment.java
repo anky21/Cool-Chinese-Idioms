@@ -51,6 +51,12 @@ public class DetailFragment extends Fragment implements
     @BindView(R.id.eg1_eng_tv)
     TextView mEg1EngTv;
 
+    @BindView(R.id.eg1_icon_frame)
+    FrameLayout mEg1IconFrame;
+
+    @BindView(R.id.eg1_icon)
+    ImageView mEg1Icon;
+
     @BindView(R.id.eg2_chn_tv)
     TextView mEg2ChnTv;
 
@@ -79,6 +85,7 @@ public class DetailFragment extends Fragment implements
     private AudioManager audioManager;
 
     private int length = 0;
+    private int eg1Length = 0;
 
     private static final String YOUTUBE_REQUEST_URL = "https://www.youtube.com/watch?v=";
 
@@ -90,11 +97,12 @@ public class DetailFragment extends Fragment implements
     private String mExplanationEng;
     private String mExample1;
     private String mExample1Eng;
+    private String mEg1Audioid;
     private String mExample2;
     private String mExample2Eng;
     private String mExample3;
     private String mExample3Eng;
-    private int idiomAudioId;
+//    private int idiomAudioId;
 
     /**
      * Content URI for the current idiom
@@ -162,20 +170,26 @@ public class DetailFragment extends Fragment implements
             mExample3Eng = cursor.getString(Utilities.COL_EXAMPLE3_ENG);
             mIdiomAudio = cursor.getString(Utilities.COL_AUDIO_FILE);
             mYoutubeKey = cursor.getString(Utilities.COL_YOUTUBE);
+            mEg1Audioid = cursor.getString(Utilities.COL_EXAMPLE1_AUDIO);
 
             // Open Youtube or a website to see a video
             mYoutubeLayout.setOnClickListener(mYoutubeClickListener);
 
             // Set up the audio play button for the idiom
-            idiomAudioId = context.getResources().getIdentifier(mIdiomAudio, "raw", context.getPackageName());
+            int idiomAudioId = context.getResources().getIdentifier(mIdiomAudio, "raw", context.getPackageName());
             soundPlayIcon.setTag(R.drawable.ic_play_sound);
-            soundPlayIconFrame.setOnClickListener(mSoundPlayIconClickListener);
+//            soundPlayIconFrame.setOnClickListener(mSoundPlayIconClickListener);
+            soundPlayIconFrame.setOnClickListener(new SoundOCL(soundPlayIcon, idiomAudioId, length));
+
+            int eg1AudioId = context.getResources().getIdentifier(mIdiomAudio, "raw", context.getPackageName());
+            mEg1Icon.setTag(R.drawable.ic_play_sound);
+            mEg1IconFrame.setOnClickListener(new SoundOCL(mEg1Icon, eg1AudioId, eg1Length));
 
             mIdiomNameTv.setText(mIdiomName);
             mPinyin1Tv.setText(mPinyin1);
             int translationLength = mTranslationTv.getText().length();
             mTranslationTv.append(" " + mTranslation);
-            changeTextStyle(mTranslationTv,translationLength);
+            changeTextStyle(mTranslationTv, translationLength);
 
             int explanationLength = mExplanationTv.getText().length();
             mExplanationTv.append(" " + mExplanationEng);
@@ -196,49 +210,131 @@ public class DetailFragment extends Fragment implements
     }
 
     // Change style of partial text
-    private void changeTextStyle(TextView textView, int end){
+    private void changeTextStyle(TextView textView, int end) {
         SpannableStringBuilder textSpan = SpannableStringBuilder.valueOf(textView.getText());
-        textSpan.setSpan(new TextAppearanceSpan(getActivity(),android.R.style.TextAppearance_Medium), 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textSpan.setSpan(new TextAppearanceSpan(getActivity(), android.R.style.TextAppearance_Medium), 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-    private View.OnClickListener mSoundPlayIconClickListener = new View.OnClickListener() {
-        @Override
+//    private View.OnClickListener mSoundPlayIconClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length == 0) {
+//                // Release the MediaPlayer if it currently exists
+//                releaseMediaPlayer();
+//                int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+//                        AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+//                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+//                    // Create and setup the {@link MediaPlayer}
+//                    mediaPlayer = MediaPlayer.create(getContext(), idiomAudioId);
+//
+//                    // Start playing the audio file
+//                    mediaPlayer.start();
+//
+//                    // Change audio icon
+//                    Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+//
+//                    // Setup a listener to stop and release the media player after playing
+//                    mediaPlayer.setOnCompletionListener(mCompletionListener);
+//                }
+//            } else if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length != 0) {
+//                // Start from the saved position
+//                mediaPlayer.seekTo(length);
+//                mediaPlayer.start();
+//
+//                // Change audio icon
+//                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+//            } else if (mediaPlayer.isPlaying()) {
+//                // Save the current position
+//                length = mediaPlayer.getCurrentPosition();
+//                mediaPlayer.pause();
+//
+//                // Change audio icon
+//                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+//            }
+//        }
+//    };
+
+    /**
+     * Override OnClickListener to have some arguments
+     */
+    class SoundOCL implements View.OnClickListener {
+        ImageView soundIcon;
+        int audioFileId;
+        int length;
+
+        public SoundOCL(ImageView soundIcon, int audioFileId, int length) {
+            this.soundIcon = soundIcon;
+            this.audioFileId = audioFileId;
+            this.length = length;
+        }
+
         public void onClick(View v) {
-            if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length == 0) {
+            if ((int) soundIcon.getTag() == R.drawable.ic_play_sound && length == 0) {
                 // Release the MediaPlayer if it currently exists
                 releaseMediaPlayer();
-                int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                int result = audioManager.requestAudioFocus(new AudioManager.OnAudioFocusChangeListener() {
+                                                                @Override
+                                                                public void onAudioFocusChange(int focusChange) {
+                                                                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
+                                                                            focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                                                                        // Pause playback and reset player to the start of the file
+                                                                        mediaPlayer.pause();
+                                                                        length = 0;
+                                                                        // Change audio icon
+                                                                        Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+                                                                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                                                                        // Resume playback when focus is regained.
+                                                                        mediaPlayer.start();
+                                                                        // Change audio icon
+                                                                        Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+                                                                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                                                                        // Stop playback and clean up resources
+                                                                        releaseMediaPlayer();
+                                                                    }
+                                                                }
+                                                            },
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     // Create and setup the {@link MediaPlayer}
-                    mediaPlayer = MediaPlayer.create(getContext(), idiomAudioId);
+                    mediaPlayer = MediaPlayer.create(getContext(), audioFileId);
 
                     // Start playing the audio file
                     mediaPlayer.start();
 
                     // Change audio icon
-                    Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+                    Utilities.setAudioPlayIcon(mediaPlayer, soundIcon);
 
                     // Setup a listener to stop and release the media player after playing
-                    mediaPlayer.setOnCompletionListener(mCompletionListener);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            // Reset position to the start
+                            length = 0;
+                            // Change audio icon
+                            Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+                            // Release the media player resources.
+                            releaseMediaPlayer();
+                        }
+                    });
                 }
-            } else if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length != 0) {
+            } else if ((int) soundIcon.getTag() == R.drawable.ic_play_sound && length != 0) {
                 // Start from the saved position
                 mediaPlayer.seekTo(length);
                 mediaPlayer.start();
 
                 // Change audio icon
-                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+                Utilities.setAudioPlayIcon(mediaPlayer, soundIcon);
             } else if (mediaPlayer.isPlaying()) {
                 // Save the current position
                 length = mediaPlayer.getCurrentPosition();
                 mediaPlayer.pause();
 
                 // Change audio icon
-                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+                Utilities.setAudioPlayIcon(mediaPlayer, soundIcon);
             }
         }
-    };
+
+    }
 
     /**
      * Clean up the media player by releasing its resources.
@@ -285,20 +381,20 @@ public class DetailFragment extends Fragment implements
         }
     };
 
-    /**
-     * Triggered when the {@link MediaPlayer} has completed playing the audio file.
-     */
-    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mediaPlayer) {
-            // Reset position to the start
-            length = 0;
-            // Change audio icon
-            Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
-            // Release the media player resources.
-            releaseMediaPlayer();
-        }
-    };
+//    /**
+//     * Triggered when the {@link MediaPlayer} has completed playing the audio file.
+//     */
+//    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+//        @Override
+//        public void onCompletion(MediaPlayer mediaPlayer) {
+//            // Reset position to the start
+//            length = 0;
+//            // Change audio icon
+//            Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+//            // Release the media player resources.
+//            releaseMediaPlayer();
+//        }
+//    };
 
     // Triggered when user clicks on the Youtube video area
     private View.OnClickListener mYoutubeClickListener = new View.OnClickListener() {
