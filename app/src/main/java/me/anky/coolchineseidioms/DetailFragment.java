@@ -1,6 +1,5 @@
 package me.anky.coolchineseidioms;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -19,13 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,11 +48,17 @@ public class DetailFragment extends Fragment implements
     @BindView(R.id.eg1_eng_tv)
     TextView mEg1EngTv;
 
+    @BindView(R.id.eg1_icon_frame)
+    FrameLayout mEg1IconFrame;
+
     @BindView(R.id.eg2_chn_tv)
     TextView mEg2ChnTv;
 
     @BindView(R.id.eg2_eng_tv)
     TextView mEg2EngTv;
+
+    @BindView(R.id.eg2_icon_frame)
+    FrameLayout mEg2IconFrame;
 
     @BindView(R.id.eg3_chn_tv)
     TextView mEg3ChnTv;
@@ -63,11 +66,14 @@ public class DetailFragment extends Fragment implements
     @BindView(R.id.eg3_eng_tv)
     TextView mEg3EngTv;
 
+    @BindView(R.id.eg3_icon_frame)
+    FrameLayout mEg3IconFrame;
+
     @BindView(R.id.sound_icon_frame)
     FrameLayout soundPlayIconFrame;
 
-    @BindView(R.id.sound_icon)
-    ImageView soundPlayIcon;
+//    @BindView(R.id.sound_icon)
+//    ImageView soundPlayIcon;
 
     @BindView(R.id.youtube_layout)
     LinearLayout mYoutubeLayout;
@@ -77,8 +83,6 @@ public class DetailFragment extends Fragment implements
 
     // Handles audio focus when playing a sound file
     private AudioManager audioManager;
-
-    private int length = 0;
 
     private static final String YOUTUBE_REQUEST_URL = "https://www.youtube.com/watch?v=";
 
@@ -94,7 +98,9 @@ public class DetailFragment extends Fragment implements
     private String mExample2Eng;
     private String mExample3;
     private String mExample3Eng;
-    private int idiomAudioId;
+    private String mEg1Audioid;
+    private String mEg2Audioid;
+    private String mEg3Audioid;
 
     /**
      * Content URI for the current idiom
@@ -162,20 +168,34 @@ public class DetailFragment extends Fragment implements
             mExample3Eng = cursor.getString(Utilities.COL_EXAMPLE3_ENG);
             mIdiomAudio = cursor.getString(Utilities.COL_AUDIO_FILE);
             mYoutubeKey = cursor.getString(Utilities.COL_YOUTUBE);
+            mEg1Audioid = cursor.getString(Utilities.COL_EXAMPLE1_AUDIO);
+            mEg2Audioid = cursor.getString(Utilities.COL_EXAMPLE2_AUDIO);
+            mEg3Audioid = cursor.getString(Utilities.COL_EXAMPLE3_AUDIO);
 
             // Open Youtube or a website to see a video
             mYoutubeLayout.setOnClickListener(mYoutubeClickListener);
 
             // Set up the audio play button for the idiom
-            idiomAudioId = context.getResources().getIdentifier(mIdiomAudio, "raw", context.getPackageName());
-            soundPlayIcon.setTag(R.drawable.ic_play_sound);
-            soundPlayIconFrame.setOnClickListener(mSoundPlayIconClickListener);
+            int idiomAudioId = context.getResources().getIdentifier(mIdiomAudio, "raw", context.getPackageName());
+            soundPlayIconFrame.setOnClickListener(new SoundOCL(idiomAudioId));
+
+            // Set up the audio play button for example 1
+            int eg1AudioId = context.getResources().getIdentifier(mEg1Audioid, "raw", context.getPackageName());
+            mEg1IconFrame.setOnClickListener(new SoundOCL(eg1AudioId));
+
+            // Set up the audio play button for example 2
+            int eg2AudioId = context.getResources().getIdentifier(mEg2Audioid, "raw", context.getPackageName());
+            mEg2IconFrame.setOnClickListener(new SoundOCL(eg2AudioId));
+
+            // Set up the audio play button for example 3
+            int eg3AudioId = context.getResources().getIdentifier(mEg3Audioid, "raw", context.getPackageName());
+            mEg3IconFrame.setOnClickListener(new SoundOCL(eg3AudioId));
 
             mIdiomNameTv.setText(mIdiomName);
             mPinyin1Tv.setText(mPinyin1);
             int translationLength = mTranslationTv.getText().length();
             mTranslationTv.append(" " + mTranslation);
-            changeTextStyle(mTranslationTv,translationLength);
+            changeTextStyle(mTranslationTv, translationLength);
 
             int explanationLength = mExplanationTv.getText().length();
             mExplanationTv.append(" " + mExplanationEng);
@@ -196,58 +216,43 @@ public class DetailFragment extends Fragment implements
     }
 
     // Change style of partial text
-    private void changeTextStyle(TextView textView, int end){
+    private void changeTextStyle(TextView textView, int end) {
         SpannableStringBuilder textSpan = SpannableStringBuilder.valueOf(textView.getText());
-        textSpan.setSpan(new TextAppearanceSpan(getActivity(),android.R.style.TextAppearance_Medium), 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textSpan.setSpan(new TextAppearanceSpan(getActivity(), android.R.style.TextAppearance_Medium), 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-    private View.OnClickListener mSoundPlayIconClickListener = new View.OnClickListener() {
-        @Override
+    /**
+     * Override OnClickListener to have some arguments
+     */
+    class SoundOCL implements View.OnClickListener {
+        int audioFileId;
+
+        public SoundOCL(int audioFileId) {
+            this.audioFileId = audioFileId;
+        }
+
         public void onClick(View v) {
-            if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length == 0) {
-                // Release the MediaPlayer if it currently exists
-                releaseMediaPlayer();
-                int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-                        AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    // Create and setup the {@link MediaPlayer}
-                    mediaPlayer = MediaPlayer.create(getContext(), idiomAudioId);
+            // Release the MediaPlayer if it currently exists
+            releaseMediaPlayer();
+            int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                    AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                // Create and setup the {@link MediaPlayer}
+                mediaPlayer = MediaPlayer.create(getContext(), audioFileId);
 
-                    // Start playing the audio file
-                    mediaPlayer.start();
-
-                    // Change audio icon
-                    Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
-
-                    // Setup a listener to stop and release the media player after playing
-                    mediaPlayer.setOnCompletionListener(mCompletionListener);
-                }
-            } else if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length != 0) {
-                // Start from the saved position
-                mediaPlayer.seekTo(length);
+                // Start playing the audio file
                 mediaPlayer.start();
 
-                // Change audio icon
-                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
-            } else if (mediaPlayer.isPlaying()) {
-                // Save the current position
-                length = mediaPlayer.getCurrentPosition();
-                mediaPlayer.pause();
-
-                // Change audio icon
-                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
+                // Setup a listener to stop and release the media player after playing
+                mediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         }
-    };
+    }
 
     /**
      * Clean up the media player by releasing its resources.
      */
     private void releaseMediaPlayer() {
-        // Change audio icon
-        soundPlayIcon.setImageResource(R.drawable.ic_play_sound);
-        soundPlayIcon.setTag(R.drawable.ic_play_sound);
-
         if (mediaPlayer != null) {
             // Release its resources
             mediaPlayer.release();
@@ -271,13 +276,9 @@ public class DetailFragment extends Fragment implements
                 // Pause playback and reset player to the start of the file
                 mediaPlayer.pause();
                 mediaPlayer.seekTo(0);
-                // Change audio icon
-                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                 // Resume playback when focus is regained.
                 mediaPlayer.start();
-                // Change audio icon
-                Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 // Stop playback and clean up resources
                 releaseMediaPlayer();
@@ -291,10 +292,6 @@ public class DetailFragment extends Fragment implements
     private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
-            // Reset position to the start
-            length = 0;
-            // Change audio icon
-            Utilities.setAudioPlayIcon(mediaPlayer, soundPlayIcon);
             // Release the media player resources.
             releaseMediaPlayer();
         }
