@@ -15,4 +15,10 @@
     <string name="course_list_title">Courses</string>
     <string name="all_idioms_course">All Idioms</string>
 
+    <!-- Detail view of the idiom -->
+    <string name="translation_tv"><b>Translation:</b></string>
+    <string name="examples_tv">Examples</string>
+    <string name="explanation_tv"><b>Explanation:</b></string>
+    <string name="youtube_link_description">Watch me explaining in Chinese</string>
+
 </resources>

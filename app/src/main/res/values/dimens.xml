@@ -17,4 +17,9 @@
     <dimen name="cardview_corner_radius">4dp</dimen>
 
     <dimen name="divider_view_height">1dp</dimen>
+
+    <!-- Sizes related to icons/images -->
+    <dimen name="sound_icon_size">20dp</dimen>
+    <dimen name="sound_icon_frame_size">40dp</dimen>
+    <dimen name="favourite_icon_size">25dp</dimen>
 </resources>

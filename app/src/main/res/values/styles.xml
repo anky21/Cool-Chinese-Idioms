@@ -36,4 +36,34 @@
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
     </style>
 
+    <!-- Style for sound icon -->
+    <style name="SoundIcon">
+        <item name="android:layout_width">@dimen/sound_icon_size</item>
+        <item name="android:layout_height">@dimen/sound_icon_size</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:src">@drawable/ic_play_sound</item>
+    </style>
+
+    <!-- Style for sound icon container-->
+    <style name="SoundIconContainer">
+        <item name="android:layout_width">@dimen/sound_icon_frame_size</item>
+        <item name="android:layout_height">@dimen/sound_icon_frame_size</item>
+        <item name="android:background">@drawable/ic_round_background</item>
+    </style>
+
+    <!-- Example in Chinese -->
+    <style name="ExampleChinese">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/margin_8dp</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
+    <!-- Example in Chinese -->
+    <style name="ExampleEnglish">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/margin_8dp</item>
+    </style>
+
 </resources>
