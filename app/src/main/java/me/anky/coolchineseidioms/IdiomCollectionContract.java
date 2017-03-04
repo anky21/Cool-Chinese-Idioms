@@ -1,6 +1,7 @@
 package me.anky.coolchineseidioms;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -62,17 +63,26 @@ public class IdiomCollectionContract {
         // Sample sentence 1 in English
         public final static String COLUMN_EXAMPLE1_ENG = "example_1_eng";
 
+        // Sample sentence 1 audio file
+        public final static String COLUMN_EXAMPLE1_AUDIO = "eg1_audio";
+
         // Sample sentence 2 in Chinese
         public final static String COLUMN_EXAMPLE2 = "example_2";
 
         // Sample sentence 2 in English
         public final static String COLUMN_EXAMPLE2_ENG = "example_2_eng";
 
+        // Sample sentence 2 audio file
+        public final static String COLUMN_EXAMPLE2_AUDIO = "eg2_audio";
+
         // Sample sentence 3 in Chinese
         public final static String COLUMN_EXAMPLE3 = "example_3";
 
         // Sample sentence 3 in English
         public final static String COLUMN_EXAMPLE3_ENG = "example_3_eng";
+
+        // Sample sentence 3 audio file
+        public final static String COLUMN_EXAMPLE3_AUDIO = "eg3_audio";
 
         // Idiom category: contain numbers
         public final static String COLUMN_CONTAIN_NUMBERS = "contain_numbers";
@@ -89,8 +99,9 @@ public class IdiomCollectionContract {
         // Youtube video url
         public final static String COLUMN_YOUTUBE_URL = "youtube_url";
 
-        public static Uri buildIdiomUriWithId(String _ID){
-            return CONTENT_URI.buildUpon().appendPath(_ID).build();
+        public static Uri buildIdiomUriWithId(long id){
+//            return CONTENT_URI.buildUpon().appendPath(id).build();
+            return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
 }

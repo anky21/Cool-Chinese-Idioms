@@ -24,8 +24,7 @@
                 android:id="@+id/idiom_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:text="一叶障目" />
+                android:textAppearance="?android:textAppearanceLarge" />
 
             <FrameLayout
                 android:id="@+id/favourite_button"
@@ -56,15 +55,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                tools:text="duì niú tán qín"
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <FrameLayout
-                android:id="@+id/icon_frame"
+                android:id="@+id/sound_icon_frame"
                 style="@style/SoundIconContainer">
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/sound_icon"
                     style="@style/SoundIcon" />
             </FrameLayout>
 
@@ -135,13 +133,11 @@
 
                 <TextView
                     android:id="@+id/eg1_chn_tv"
-                    style="@style/ExampleChinese"
-                    android:text="老师提起笔在小明所画的马上加了几笔，顿时整匹马显得活灵活现，真是画龙点睛啊！" />
+                    style="@style/ExampleChinese" />
 
                 <TextView
                     android:id="@+id/eg1_eng_tv"
-                    style="@style/ExampleEnglish"
-                    android:text="Sample sentence 1 for Dui Niu Tan Qin sdfas asd Sample sentence 1 for Dui Niu Tan Qin" />
+                    style="@style/ExampleEnglish" />
             </LinearLayout>
 
             <FrameLayout
@@ -168,13 +164,11 @@
 
                 <TextView
                     android:id="@+id/eg2_chn_tv"
-                    style="@style/ExampleChinese"
-                    tools:text="老师提起笔在小明所画的马上加了几笔，顿时整匹马显得活灵活现，真是画龙点睛啊！" />
+                    style="@style/ExampleChinese" />
 
                 <TextView
                     android:id="@+id/eg2_eng_tv"
-                    style="@style/ExampleEnglish"
-                    tools:text="Sample sentence 1 for Dui Niu asd sdf Tan Qin Sample sentence 1 for Dui Niu Tan Qin" />
+                    style="@style/ExampleEnglish" />
             </LinearLayout>
 
             <FrameLayout
@@ -201,13 +195,11 @@
 
                 <TextView
                     android:id="@+id/eg3_chn_tv"
-                    style="@style/ExampleChinese"
-                    tools:text="老师提起笔在小明所画的马上加了几笔，顿时整匹马显得活灵活现，真是画龙点睛啊！" />
+                    style="@style/ExampleChinese" />
 
                 <TextView
                     android:id="@+id/eg3_eng_tv"
-                    style="@style/ExampleEnglish"
-                    tools:text="Sample sentence 1 for Dui Niu Tan Qin Sample sentence 1 for Dui Niu Tan Qin" />
+                    style="@style/ExampleEnglish" />
             </LinearLayout>
 
             <FrameLayout

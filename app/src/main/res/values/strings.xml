@@ -16,9 +16,9 @@
     <string name="all_idioms_course">All Idioms</string>
 
     <!-- Detail view of the idiom -->
-    <string name="translation_tv"><b>Translation:</b></string>
+    <string name="translation_tv">Translation:</string>
     <string name="examples_tv">Examples</string>
-    <string name="explanation_tv"><b>Explanation:</b></string>
+    <string name="explanation_tv">Explanation:</string>
     <string name="youtube_link_description">Watch me explaining in Chinese</string>
 
 </resources>

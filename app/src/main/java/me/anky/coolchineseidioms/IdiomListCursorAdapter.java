@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
-
 /**
  * Created by Anky An on 28/02/2017.
  * anky25@gmail.com
@@ -48,13 +46,9 @@ public class IdiomListCursorAdapter extends CursorAdapter {
     public void bindView(View view, final Context context, Cursor cursor) {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        // Find the columns of idiom attributes
-        int columnIdiom = cursor.getColumnIndex(IdiomCollectionEntry.COLUMN_IDIOM);
-        int columnAudio = cursor.getColumnIndex(IdiomCollectionEntry.COLUMN_AUDIO_FILE);
-
         // Read the idiom attributes from the Cursor
-        String idiomName = cursor.getString(columnIdiom);
-        final String audioFile = cursor.getString(columnAudio);
+        String idiomName = cursor.getString(Utilities.COL_IDIOM_NAME);
+        final String audioFile = cursor.getString(Utilities.COL_AUDIO_FILE);
         final int audioId = context.getResources().getIdentifier(audioFile, "raw", context.getPackageName());
 
         // Set the views for the ViewHolder

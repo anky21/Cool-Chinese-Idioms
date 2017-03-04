@@ -5,6 +5,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -100,6 +101,8 @@ public class IdiomListFragment extends Fragment implements
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(getContext(), DetailActivity.class);
+            Uri currentIdiomUri = IdiomCollectionEntry.buildIdiomUriWithId(id);
+            intent.setData(currentIdiomUri);
             startActivity(intent);
         }
     };
