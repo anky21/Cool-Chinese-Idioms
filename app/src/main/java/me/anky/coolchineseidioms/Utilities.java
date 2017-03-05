@@ -35,8 +35,8 @@ public class Utilities {
     }
 
     // Set the favourite icon
-    public static void setFavouriteIcon(boolean isFavourite, ImageView imageView){
-        if(isFavourite){
+    public static void setFavouriteIcon(boolean isFavourite, ImageView imageView) {
+        if (isFavourite) {
             imageView.setImageResource(R.drawable.ic_red_heart);
             imageView.setTag(R.drawable.ic_red_heart);
         } else {
@@ -56,6 +56,13 @@ public class Utilities {
             imageView.setTag(R.drawable.ic_play_sound);
         }
     }
+
+    // Columns in favourite table
+    public static final String[] FAVOURITE_DB_COLUMNS = {
+            FavouritesEntry.COLUMN_FAVORT_ID,
+            FavouritesEntry.COLUMN_FAVORT_IDIOM,
+            FavouritesEntry.COLUMN_FAVORT_AUDIO,
+            FavouritesEntry._ID};
 
     // A few attributes of interest for a list of idioms
     public static final String[] IDIOM_FEW_COLUMNS = {
@@ -92,9 +99,9 @@ public class Utilities {
     };
 
     // Indices tied to IDIOM_FEW_COLUMNS
-    public static final int COL_IDIOM_ID = 0;
-    public static final int COL_IDIOM_NAME = 1;
-    public static final int COL_AUDIO_FILE = 2;
+    public static final int COL_IDIOM_ID = 0; // Index for both idioms.table and favourites.table
+    public static final int COL_IDIOM_NAME = 1; // Index for both idioms.table and favourites.table
+    public static final int COL_AUDIO_FILE = 2; // Index for both idioms.table and favourites.table
     public static final int COL_YOUTUBE = 3;
     public static final int COL_TRADITIONAL = 4;
     public static final int COL_LEVEL = 5;

@@ -100,8 +100,11 @@ public class IdiomCollectionContract {
         public final static String COLUMN_YOUTUBE_URL = "youtube_url";
 
         public static Uri buildIdiomUriWithId(long id){
-//            return CONTENT_URI.buildUpon().appendPath(id).build();
             return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildUriWithStringId(String id){
+            return CONTENT_URI.buildUpon().appendPath(id).build();
         }
     }
 }
