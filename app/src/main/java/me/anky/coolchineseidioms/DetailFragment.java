@@ -1,5 +1,7 @@
 package me.anky.coolchineseidioms;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,9 +22,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.anky.coolchineseidioms.UserContract.FavouritesEntry;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +36,9 @@ public class DetailFragment extends Fragment implements
 
     @BindView(R.id.idiom_name_tv)
     TextView mIdiomNameTv;
+
+    @BindView(R.id.favourite_button)
+    FrameLayout mFavouriteButton;
 
     @BindView(R.id.pinyin1_tv)
     TextView mPinyin1Tv;
@@ -86,6 +93,9 @@ public class DetailFragment extends Fragment implements
 
     private static final String YOUTUBE_REQUEST_URL = "https://www.youtube.com/watch?v=";
 
+    ContentResolver mContentResolver;
+
+    private String mIdiomId;
     private String mIdiomName;
     private String mIdiomAudio;
     private String mYoutubeKey;
@@ -122,6 +132,7 @@ public class DetailFragment extends Fragment implements
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, rootView);
+        mContentResolver = getActivity().getContentResolver();
 
         // Create and setup the {@link AudioManager} to request audio focus
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
@@ -156,6 +167,7 @@ public class DetailFragment extends Fragment implements
 
         // Read data from the cursor
         if (cursor.moveToFirst()) {
+            mIdiomId = cursor.getString(Utilities.COL_IDIOM_ID);
             mIdiomName = cursor.getString(Utilities.COL_IDIOM_NAME);
             mPinyin1 = cursor.getString(Utilities.COL_PINYIN1);
             mTranslation = cursor.getString(Utilities.COL_TRANSLATION);
@@ -190,6 +202,22 @@ public class DetailFragment extends Fragment implements
             // Set up the audio play button for example 3
             int eg3AudioId = context.getResources().getIdentifier(mEg3Audioid, "raw", context.getPackageName());
             mEg3IconFrame.setOnClickListener(new SoundOCL(eg3AudioId));
+
+            // Set up the Favourite button
+            mFavouriteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ContentValues values = new ContentValues();
+                    values.put(FavouritesEntry.COLUMN_FAVORT_ID, mIdiomId);
+                    values.put(FavouritesEntry.COLUMN_FAVORT_IDIOM, mIdiomName);
+                    values.put(FavouritesEntry.COLUMN_FAVORT_AUDIO, mIdiomAudio);
+
+                    // Insert this idiom into the database
+                    mContentResolver.insert(FavouritesEntry.CONTENT_URI, values);
+                    Toast.makeText(getContext(), "This idiom is added to Favourites",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
 
             mIdiomNameTv.setText(mIdiomName);
             mPinyin1Tv.setText(mPinyin1);

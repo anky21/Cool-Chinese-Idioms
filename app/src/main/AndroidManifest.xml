@@ -23,6 +23,11 @@
             android:authorities="me.anky.coolchineseidioms"
             android:exported="false" />
 
+        <provider
+            android:name=".UserProvider"
+            android:authorities="me.anky.coolchineseidioms.user"
+            android:exported="false" />
+
         <activity android:name=".IdiomListActivity" />
         <activity android:name=".DetailActivity"></activity>
     </application>
