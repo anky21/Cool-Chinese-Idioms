@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">Cool Chinese Idioms</string>
+    <string name="app_name">Chengyu</string>
 
     <!-- Titles for Main Screen tabs -->
     <string name="tab_home_title">Home</string>
     <string name="tab_categories_title">Categories</string>
     <string name="tab_idiom_bank_title">Favourites</string>
     <string name="idiom_of_the_day">Idiom of the Day</string>
+    <string name="today_idiom_widget">Today\'s idiom</string>
 
     <!-- Course choices -->
     <string name="course_most_commonly_used">Most Commonly Used</string>

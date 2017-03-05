@@ -9,6 +9,7 @@
 
     <!-- Margins and paddings -->
     <dimen name="margin_0dp">0dp</dimen>
+    <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_4dp">4dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
@@ -23,4 +24,9 @@
     <dimen name="sound_icon_size">20dp</dimen>
     <dimen name="sound_icon_frame_size">40dp</dimen>
     <dimen name="favourite_icon_size">25dp</dimen>
+
+    <!-- App Widget -->
+    <dimen name="widget_default_width">240dp</dimen>
+    <dimen name="widget_default_height">60dp</dimen>
+
 </resources>
