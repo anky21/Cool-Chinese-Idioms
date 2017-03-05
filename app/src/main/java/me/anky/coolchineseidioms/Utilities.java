@@ -1,9 +1,12 @@
 package me.anky.coolchineseidioms;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.widget.ImageView;
 
 import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.UserContract.FavouritesEntry;
 
 /**
  * Created by Anky An on 22/02/2017.
@@ -11,6 +14,36 @@ import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
  */
 
 public class Utilities {
+
+    // Check if an idiom is favourite
+    public static boolean isFavourite(Context context, String idiomId) {
+        String selection = FavouritesEntry.COLUMN_FAVORT_ID + "=?";
+        String[] selectionArgs = new String[]{idiomId};
+
+        Cursor cursor = context.getContentResolver().query(
+                FavouritesEntry.CONTENT_URI,
+                null,
+                selection,
+                selectionArgs,
+                null
+        );
+        if (cursor != null & cursor.moveToFirst()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Set the favourite icon
+    public static void setFavouriteIcon(boolean isFavourite, ImageView imageView){
+        if(isFavourite){
+            imageView.setImageResource(R.drawable.ic_red_heart);
+            imageView.setTag(R.drawable.ic_red_heart);
+        } else {
+            imageView.setImageResource(R.drawable.ic_heart_outline);
+            imageView.setTag(R.drawable.ic_heart_outline);
+        }
+    }
 
     // Set audio play icon
     public static void setAudioPlayIcon(MediaPlayer mediaPlayer, ImageView imageView) {

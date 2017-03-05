@@ -20,5 +20,7 @@
     <string name="examples_tv">Examples</string>
     <string name="explanation_tv">Explanation:</string>
     <string name="youtube_link_description">Watch me explaining in Chinese</string>
+    <string name="added_to_favourites">This idiom is added to Favourites</string>
+    <string name="removed_from_favourites">This idiom is removed from Favourites</string>
 
 </resources>

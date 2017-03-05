@@ -20,13 +20,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.anky.coolchineseidioms.UserContract.FavouritesEntry;
+
+import static me.anky.coolchineseidioms.UserContract.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +41,9 @@ public class DetailFragment extends Fragment implements
 
     @BindView(R.id.favourite_button)
     FrameLayout mFavouriteButton;
+
+    @BindView(R.id.favourite_icon)
+    ImageView mFavouriteIcon;
 
     @BindView(R.id.pinyin1_tv)
     TextView mPinyin1Tv;
@@ -184,6 +189,10 @@ public class DetailFragment extends Fragment implements
             mEg2Audioid = cursor.getString(Utilities.COL_EXAMPLE2_AUDIO);
             mEg3Audioid = cursor.getString(Utilities.COL_EXAMPLE3_AUDIO);
 
+            // Check and set the favourite icon
+            Utilities.setFavouriteIcon(Utilities.isFavourite(context, mIdiomId), mFavouriteIcon);
+            mFavouriteButton.setOnClickListener(mFavouriteButtonClickListener);
+
             // Open Youtube or a website to see a video
             mYoutubeLayout.setOnClickListener(mYoutubeClickListener);
 
@@ -202,22 +211,6 @@ public class DetailFragment extends Fragment implements
             // Set up the audio play button for example 3
             int eg3AudioId = context.getResources().getIdentifier(mEg3Audioid, "raw", context.getPackageName());
             mEg3IconFrame.setOnClickListener(new SoundOCL(eg3AudioId));
-
-            // Set up the Favourite button
-            mFavouriteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ContentValues values = new ContentValues();
-                    values.put(FavouritesEntry.COLUMN_FAVORT_ID, mIdiomId);
-                    values.put(FavouritesEntry.COLUMN_FAVORT_IDIOM, mIdiomName);
-                    values.put(FavouritesEntry.COLUMN_FAVORT_AUDIO, mIdiomAudio);
-
-                    // Insert this idiom into the database
-                    mContentResolver.insert(FavouritesEntry.CONTENT_URI, values);
-                    Toast.makeText(getContext(), "This idiom is added to Favourites",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
 
             mIdiomNameTv.setText(mIdiomName);
             mPinyin1Tv.setText(mPinyin1);
@@ -332,6 +325,36 @@ public class DetailFragment extends Fragment implements
             Uri youtubeUri = Uri.parse(YOUTUBE_REQUEST_URL + mYoutubeKey);
             Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, youtubeUri);
             startActivity(youtubeIntent);
+        }
+    };
+
+    // Triggered when user clicks on the favourite button
+    private View.OnClickListener mFavouriteButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if ((int) mFavouriteIcon.getTag() == R.drawable.ic_heart_outline) {
+                ContentValues values = new ContentValues();
+                values.put(FavouritesEntry.COLUMN_FAVORT_ID, mIdiomId);
+                values.put(FavouritesEntry.COLUMN_FAVORT_IDIOM, mIdiomName);
+                values.put(FavouritesEntry.COLUMN_FAVORT_AUDIO, mIdiomAudio);
+
+                // Insert this idiom into the database
+                mContentResolver.insert(FavouritesEntry.CONTENT_URI, values);
+                Toast.makeText(getContext(), R.string.added_to_favourites,
+                        Toast.LENGTH_SHORT).show();
+                // Change the favourite icon
+                Utilities.setFavouriteIcon(true, mFavouriteIcon);
+            }else {
+                mContentResolver.delete(
+                        FavouritesEntry.CONTENT_URI,
+                        FavouritesEntry.COLUMN_FAVORT_ID + "=?",
+                        new String[]{mIdiomId}
+                );
+                // Change the favourite icon
+                Utilities.setFavouriteIcon(false, mFavouriteIcon);
+                Toast.makeText(getContext(), R.string.removed_from_favourites,
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     };
 }
