@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
 
         // Find the tab layout that shows the tabs
         tabLayout = (TabLayout) findViewById(R.id.main_screen_tabs);

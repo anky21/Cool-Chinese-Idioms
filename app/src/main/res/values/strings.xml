@@ -22,5 +22,6 @@
     <string name="youtube_link_description">Watch me explaining in Chinese</string>
     <string name="added_to_favourites">This idiom is added to Favourites</string>
     <string name="removed_from_favourites">This idiom is removed from Favourites</string>
+    <string name="msg_add_favourite_idioms">Mark some idioms as Favourite, and they will show up here!</string>
 
 </resources>

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,9 @@ public class IdiomBankFragment extends Fragment implements
 
     @BindView(R.id.favourite_list)
     ListView mFavouriteListView;
+
+    @BindView(R.id.empty_view)
+    RelativeLayout mEmptyView;
 
     public IdiomBankFragment() {
         // Required empty public constructor
@@ -55,6 +59,8 @@ public class IdiomBankFragment extends Fragment implements
 
         mIdiomListCursorAdapter = new IdiomListCursorAdapter(getContext(), null);
         mFavouriteListView.setAdapter(mIdiomListCursorAdapter);
+        mFavouriteListView.setEmptyView(mEmptyView);
+
         mFavouriteListView.setOnItemClickListener(mFavouriteOnClickListener);
         return rootView;
     }
