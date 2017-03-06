@@ -27,6 +27,7 @@ import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment implements OnTaskCompleted {
+    public static final String ACTION_DATA_UPDATED = "me.anky.coolchineseidioms.ACTION_DATA_UPDATED";
 
     // Handles playback of all the sound files
     private MediaPlayer mediaPlayer;
@@ -154,6 +155,9 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
     public void onTaskCompleted() {
         // Fetch idiom of the data from the database and show it in the CardView
         setUpIdiomOfTheDay();
+
+        // Update the App Widget when data is written into the database
+        updateWidgets(getContext());
     }
 
     private void setUpIdiomOfTheDay() {
@@ -176,6 +180,14 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             // Click on the card view to see detail view of idiom of the day
             cardView.setOnClickListener(mCardViewOCL);
         }
+    }
+
+    // Update app widgets
+    private static void updateWidgets(Context context) {
+        // Setting the package ensures that only components in this app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
     /**
