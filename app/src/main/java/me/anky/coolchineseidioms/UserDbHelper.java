@@ -34,7 +34,8 @@ public class UserDbHelper extends SQLiteOpenHelper {
                 DailyIdiomMEntry._ID + " INTEGER PRIMARY KEY," +
                 DailyIdiomMEntry.COLUMN_DAILY_IDIOM_ID + " TEXT UNIQUE NOT NULL, " +
                 DailyIdiomMEntry.COLUMN_DAILY_IDIOM + " TEXT NOT NULL, " +
-                DailyIdiomMEntry.COLUMN_DAILY_IDIOM_AUDIO + " TEXT NOT NULL " +
+                DailyIdiomMEntry.COLUMN_DAILY_IDIOM_AUDIO + " TEXT NOT NULL, " +
+                DailyIdiomMEntry.COLUMN_TRANSLATION + " TEXT NOT NULL " +
                 " );";
 
         db.execSQL(SQL_CREATE_FAVOURITES_TABLE);

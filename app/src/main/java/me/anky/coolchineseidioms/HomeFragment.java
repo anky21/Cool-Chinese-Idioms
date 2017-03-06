@@ -1,10 +1,13 @@
 package me.anky.coolchineseidioms;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,17 +36,18 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
 
     private int length = 0;
 
-    // Tags to be sent with an intent
-    public static final String COMMON = "common";
-    public static final String BEGINNER = "beginner";
-    public static final String INTERMEDIATE = "intermediate";
-    public static final String ADVANCED = "advanced";
+    private String mDailyIdiomId;
+
+    private String mDailyIdiomAudio;
+
+    @BindView(R.id.idiom_of_the_day)
+    TextView mIdiomOfTheDay;
+
+    @BindView(R.id.idiom_meaning)
+    TextView mIdiomTranslation;
 
     @BindView(R.id.card_view)
     CardView cardView;
-
-    @BindView(R.id.idiom_of_the_day)
-    TextView idiomTv;
 
     @BindView(R.id.sound_play_icon_frame)
     FrameLayout soundPlayIconFrame;
@@ -63,8 +69,6 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
 
     @BindView(R.id.all_idioms_course)
     TextView allIdiomsCourse;
-
-    private String idiom = "";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -116,13 +120,11 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
 
+        // Get idiom of the day
+        new DailyIdiomAsyncTask(this).execute(getContext());
+
         // Create and setup the {@link AudioManager} to request audio focus
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-
-        new EndpointsAsyncTask(this).execute();
-
-        // Change background colour of the CardView
-        cardView.setCardBackgroundColor(Color.WHITE);
 
         soundPlayIcon.setTag(R.drawable.ic_play_sound);
         // Set up OnClickListener for sound play button
@@ -145,10 +147,26 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         releaseMediaPlayer();
     }
 
-    @Override
-    public void onTaskCompleted(String result) {
-        idiom = result;
-        idiomTv.setText(idiom);
+    private void setUpIdiomOfTheDay() {
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Cursor cursor = contentResolver.query(DailyIdiomMEntry.CONTENT_URI,
+                Utilities.DAILY_IDIOM_COLUMNS,
+                null,
+                null,
+                null);
+        if (cursor.moveToFirst()) {
+            mDailyIdiomId = cursor.getString(Utilities.COL_DAILY_IDIOM_ID);
+            String idiomName = cursor.getString(Utilities.COL_DAILY_IDIOM);
+            mDailyIdiomAudio = cursor.getString(Utilities.COL_DAILY_IDIOM_AUDIO);
+            String idiomTranslation = cursor.getString(Utilities.COL_DAILY_IDIOM_TRANSLATION);
+            mIdiomOfTheDay.setText(idiomName);
+            mIdiomTranslation.setText(idiomTranslation);
+
+            // Change background colour of the CardView
+            cardView.setCardBackgroundColor(Color.WHITE);
+            // Click on the card view to see detial view of idiom of the day
+            cardView.setOnClickListener(mCardViewOCL);
+        }
     }
 
     /**
@@ -176,7 +194,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_FREQUENCY + " = 1";
+            String stringExtra = IdiomCollectionEntry.COLUMN_FREQUENCY + " = 1";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             String newTitle = commonIdiomsCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
@@ -189,7 +207,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 0";
+            String stringExtra = IdiomCollectionEntry.COLUMN_LEVEL + " = 0";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             String newTitle = beginnerLevelCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
@@ -202,7 +220,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 1";
+            String stringExtra = IdiomCollectionEntry.COLUMN_LEVEL + " = 1";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             String newTitle = intermediateLevelCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
@@ -215,7 +233,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), IdiomListActivity.class);
-            String stringExtra = IdiomCollectionContract.IdiomCollectionEntry.COLUMN_LEVEL + " = 2";
+            String stringExtra = IdiomCollectionEntry.COLUMN_LEVEL + " = 2";
             intent.putExtra(Intent.EXTRA_TEXT, stringExtra);
             String newTitle = advancedLevelCoruse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
@@ -238,13 +256,16 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         @Override
         public void onClick(View v) {
             if ((int) soundPlayIcon.getTag() == R.drawable.ic_play_sound && length == 0) {
+                // Get audio file name base on the daily idiom ID
+                int audioId = getActivity().getResources().getIdentifier(mDailyIdiomAudio, "raw",
+                        getActivity().getPackageName());
                 // Release the MediaPlayer if it currently exists
                 releaseMediaPlayer();
                 int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     // Create and setup the {@link MediaPlayer}
-                    mediaPlayer = MediaPlayer.create(getContext(), R.raw.duiniutanqin);
+                    mediaPlayer = MediaPlayer.create(getContext(), audioId);
 
                     // Start playing the audio file
                     mediaPlayer.start();
@@ -272,4 +293,21 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             }
         }
     };
+
+    // Triggered when user clicks idiom of the day feature
+    private View.OnClickListener mCardViewOCL = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(mDailyIdiomId);
+            intent.setData(currentIdiomUri);
+            startActivity(intent);
+        }
+    };
+
+    @Override
+    public void onTaskCompleted() {
+        // Fetch idiom of the data from the database and show it in the CardView
+        setUpIdiomOfTheDay();
+    }
 }

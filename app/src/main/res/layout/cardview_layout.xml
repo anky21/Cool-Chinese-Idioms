@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
@@ -40,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="一鸣惊人"
+                    tools:text="一鸣惊人"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <!-- Include the layout for playing audio icon -->
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="Should one desire to sing, one would amaze the world with his first song."
+                tools:text="Should one desire to sing, one would amaze the world with his first song."
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
