@@ -9,10 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
+import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
+
+import static android.R.attr.id;
 import static me.anky.coolchineseidioms.UserContract.CONTENT_AUTHORITY;
 import static me.anky.coolchineseidioms.UserContract.FavouritesEntry;
+import static me.anky.coolchineseidioms.UserContract.PATH_DAILYIDIOM;
 import static me.anky.coolchineseidioms.UserContract.PATH_FAVOURITES;
 
 /**
@@ -27,12 +30,14 @@ public class UserProvider extends ContentProvider {
 
     private static final int FAVOURITES = 100;
     private static final int FAVOURITE_ID = 101;
+    private static final int DAILYIDIOM = 300;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_FAVOURITES, FAVOURITES);
         sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_FAVOURITES + "/#", FAVOURITE_ID);
+        sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_DAILYIDIOM, DAILYIDIOM);
     }
 
 
@@ -62,6 +67,10 @@ public class UserProvider extends ContentProvider {
                 cursor = db.query(FavouritesEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
+            case DAILYIDIOM:
+                cursor = db.query(DailyIdiomMEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
@@ -80,6 +89,8 @@ public class UserProvider extends ContentProvider {
                 return FavouritesEntry.CONTENT_LIST_TYPE;
             case FAVOURITE_ID:
                 return FavouritesEntry.CONTENT_ITEM_TYPE;
+            case DAILYIDIOM:
+                return DailyIdiomMEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri + " with match " + match);
         }
@@ -88,22 +99,33 @@ public class UserProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        String idiomId = contentValues.getAsString(FavouritesEntry.COLUMN_FAVORT_ID);
-        if (idiomId == null) {
-            throw new IllegalArgumentException("Idiom requests an ID");
-        }
-
         // Get writable database
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        Uri returnUri;
 
-        // Insert the new movie with the given values
-        long id = db.insert(FavouritesEntry.TABLE_NAME, null, contentValues);
-
-        if (id == -1) {
-            Log.e(LOG_TAG, "Failed to insert row for " + uri);
-            return null;
+        switch (match) {
+            case FAVOURITES: {
+                // Insert the new idiom with the given values
+                long id = db.insert(FavouritesEntry.TABLE_NAME, null, contentValues);
+                if (id > 0)
+                    returnUri = ContentUris.withAppendedId(uri, id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            case DAILYIDIOM: {
+                // Insert the new idiom with the given values
+                long id = db.insert(DailyIdiomMEntry.TABLE_NAME, null, contentValues);
+                if (id > 0)
+                    returnUri = ContentUris.withAppendedId(uri, id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-
         // Notify all listeners that the data has changed
         getContext().getContentResolver().notifyChange(uri, null);
 
@@ -115,11 +137,10 @@ public class UserProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         // Get writeable database
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
+        final int match = sUriMatcher.match(uri);
         // Number of rows deleted
         int rowsDeleted;
 
-        final int match = sUriMatcher.match(uri);
         switch (match) {
             case FAVOURITES:
                 rowsDeleted = db.delete(FavouritesEntry.TABLE_NAME, selection, selectionArgs);
@@ -129,6 +150,9 @@ public class UserProvider extends ContentProvider {
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = db.delete(FavouritesEntry.TABLE_NAME, selection, selectionArgs);
                 break;
+            case DAILYIDIOM:
+                rowsDeleted = db.delete(DailyIdiomMEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
@@ -137,7 +161,6 @@ public class UserProvider extends ContentProvider {
         if (rowsDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
-
         return rowsDeleted;
     }
 
@@ -145,8 +168,20 @@ public class UserProvider extends ContentProvider {
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues,
                       @Nullable String selection, @Nullable String[] selectionArgs) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        int rowsUpdated = db.update(FavouritesEntry.TABLE_NAME, contentValues, selection, selectionArgs);
-        if(rowsUpdated != 0){
+        final int match = sUriMatcher.match(uri);
+        int rowsUpdated;
+        switch (match) {
+            case FAVOURITES:
+                rowsUpdated = db.update(FavouritesEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+                break;
+            case DAILYIDIOM:
+                rowsUpdated = db.update(DailyIdiomMEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        if (rowsUpdated != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return rowsUpdated;

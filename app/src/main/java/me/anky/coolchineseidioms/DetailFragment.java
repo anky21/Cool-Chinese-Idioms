@@ -28,7 +28,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static me.anky.coolchineseidioms.UserContract.*;
+import static me.anky.coolchineseidioms.UserContract.FavouritesEntry;
 
 /**
  * A simple {@link Fragment} subclass.
