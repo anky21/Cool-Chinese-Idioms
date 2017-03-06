@@ -1,1 +1,1 @@
-include ':app', ':idiomprovider', ':backend'
+include ':app'

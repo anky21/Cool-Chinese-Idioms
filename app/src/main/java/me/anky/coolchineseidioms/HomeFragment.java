@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         // Create and setup the {@link AudioManager} to request audio focus
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
-        new EndpointsAsyncTask(this).execute();
+//        new EndpointsAsyncTask(this).execute();
 
         // Change background colour of the CardView
         cardView.setCardBackgroundColor(Color.WHITE);
