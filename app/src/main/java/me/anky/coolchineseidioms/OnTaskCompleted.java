@@ -7,5 +7,5 @@ package me.anky.coolchineseidioms;
 
 // Interface to pass AsyncTask result on to fragment
 public interface OnTaskCompleted {
-    void onTaskCompleted(String result);
+    void onTaskCompleted();
 }

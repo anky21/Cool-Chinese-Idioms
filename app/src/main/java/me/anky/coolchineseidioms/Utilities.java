@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.widget.ImageView;
 
 import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
 import me.anky.coolchineseidioms.UserContract.FavouritesEntry;
 
 /**
@@ -57,6 +58,19 @@ public class Utilities {
         }
     }
 
+    // Columns in dailyidiom table
+    public static final String[] DAILY_IDIOM_COLUMNS = {
+            DailyIdiomMEntry.COLUMN_DAILY_IDIOM_ID,
+            DailyIdiomMEntry.COLUMN_DAILY_IDIOM,
+            DailyIdiomMEntry.COLUMN_DAILY_IDIOM_AUDIO,
+            DailyIdiomMEntry.COLUMN_TRANSLATION};
+
+    // Indices for dailyidiom table
+    public static final int COL_DAILY_IDIOM_ID = 0;
+    public static final int COL_DAILY_IDIOM = 1;
+    public static final int COL_DAILY_IDIOM_AUDIO = 2;
+    public static final int COL_DAILY_IDIOM_TRANSLATION = 3;
+
     // Columns in favourite table
     public static final String[] FAVOURITE_DB_COLUMNS = {
             FavouritesEntry.COLUMN_FAVORT_ID,
@@ -98,7 +112,7 @@ public class Utilities {
             IdiomCollectionEntry.COLUMN_SEASONS
     };
 
-    // Indices tied to IDIOM_FEW_COLUMNS
+    // Indices tied to IDIOM_COLLECTION_COLUMNS
     public static final int COL_IDIOM_ID = 0; // Index for both idioms.table and favourites.table
     public static final int COL_IDIOM_NAME = 1; // Index for both idioms.table and favourites.table
     public static final int COL_AUDIO_FILE = 2; // Index for both idioms.table and favourites.table

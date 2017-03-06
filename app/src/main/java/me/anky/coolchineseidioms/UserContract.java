@@ -53,5 +53,7 @@ public class UserContract {
         public final static String COLUMN_DAILY_IDIOM = "idiom";
 
         public final static String COLUMN_DAILY_IDIOM_AUDIO = "audio";
+
+        public final static String COLUMN_TRANSLATION = "translation";
     }
 }
