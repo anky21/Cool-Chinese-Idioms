@@ -61,6 +61,12 @@ public class WidgetIntentService extends IntentService {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, launchIntent, 0);
             views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
 
+            // Create an Intent to play an audio file
+            Intent playIntent = new Intent(this, MediaPlayerService.class);
+            playIntent.putExtra(Intent.EXTRA_TEXT, audioFile);
+            PendingIntent playPendingIntent = PendingIntent.getService(this, 1, playIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            views.setOnClickPendingIntent(R.id.sound_play_icon_frame, playPendingIntent);
+
             // Perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
