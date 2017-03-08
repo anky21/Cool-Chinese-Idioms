@@ -1,6 +1,7 @@
 package me.anky.coolchineseidioms;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
@@ -16,12 +17,13 @@ import java.io.IOException;
  */
 
 public class MediaPlayerService extends Service implements MediaPlayer.OnPreparedListener {
-    private static final String ACTION_PLAY = "me.anky.coolchineseidioms.PLAY";
     MediaPlayer mMediaPlayer = null;
+    AudioManager am;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
     @Nullable
@@ -43,12 +45,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
                 AssetFileDescriptor afd = getResources().openRawResourceFd(audioFileId);
                 mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
                 mMediaPlayer.prepareAsync();
-                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        stopSelf();
-                    }
-                });
+                mMediaPlayer.setOnCompletionListener(mCompletionListener);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -60,6 +57,59 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
     // Called when media player is ready
     @Override
     public void onPrepared(MediaPlayer mp) {
-        mp.start();
+        int result = am.requestAudioFocus(mOnAudioFocusChangeListener,
+                AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            mp.start();
+        }
     }
+
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        if (mMediaPlayer != null) {
+            // Release its resources
+            mMediaPlayer.release();
+
+            // Set the media player back to null.
+            mMediaPlayer = null;
+        }
+    }
+
+    // Triggered when media player completes playing
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+            
+            // Stop the service
+            stopSelf();
+        }
+    };
+
+    /*
+* This listener is triggered whenever the audio focus changes
+* */
+    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
+                    focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                if (mMediaPlayer != null) {
+                    // Pause playback and reset player to the start of the file
+                    mMediaPlayer.pause();
+                    mMediaPlayer.seekTo(0);
+                }
+            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                if (mMediaPlayer != null) {
+                    // Resume playback when focus is regained.
+                    mMediaPlayer.start();
+                }
+            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                // Stop playback and clean up resources
+                releaseMediaPlayer();
+            }
+        }
+    };
 }
