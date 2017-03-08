@@ -43,7 +43,8 @@
                 android:resource="@xml/app_widget_info" />
         </receiver>
         <service android:name=".WidgetIntentService"/>
-        <service android:name=".MediaPlayerService" />
+        <service android:name=".MediaPlayerService"
+            android:exported="false"/>
     </application>
 
 </manifest>
