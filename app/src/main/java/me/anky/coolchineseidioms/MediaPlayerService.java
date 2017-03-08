@@ -17,12 +17,16 @@ import java.io.IOException;
  */
 
 public class MediaPlayerService extends Service implements MediaPlayer.OnPreparedListener {
+    private static final String LOG_TAG = "testing";
+    private static MediaPlayerService serviceInstance;
+
     MediaPlayer mMediaPlayer = null;
     AudioManager am;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        serviceInstance = this;
         am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
@@ -34,21 +38,22 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (startId == 1) {
-            String audioFile = intent.getStringExtra(Intent.EXTRA_TEXT);
-            int audioFileId = getApplicationContext().getResources().getIdentifier(audioFile, "raw",
-                    getApplicationContext().getPackageName());
-            mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setOnPreparedListener(this);
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            try {
-                AssetFileDescriptor afd = getResources().openRawResourceFd(audioFileId);
-                mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                mMediaPlayer.prepareAsync();
-                mMediaPlayer.setOnCompletionListener(mCompletionListener);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        // Stop the media player when a new service is requested
+        releaseMediaPlayer();
+        String audioFile = intent.getStringExtra(Intent.EXTRA_TEXT);
+        int audioFileId = getApplicationContext().getResources().getIdentifier(audioFile, "raw",
+                getApplicationContext().getPackageName());
+        // Initialise the media player
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setOnPreparedListener(this);
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            AssetFileDescriptor afd = getResources().openRawResourceFd(audioFileId);
+            mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            mMediaPlayer.prepareAsync();
+            mMediaPlayer.setOnCompletionListener(mCompletionListener);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -82,15 +87,14 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
             releaseMediaPlayer();
-            
             // Stop the service
             stopSelf();
         }
     };
 
     /*
-* This listener is triggered whenever the audio focus changes
-* */
+    * This listener is triggered whenever the audio focus changes
+    * */
     private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {

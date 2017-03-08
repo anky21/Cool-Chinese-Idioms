@@ -60,13 +60,6 @@ public class IdiomListFragment extends Fragment implements
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        // Release the mediaplayer
-        mIdiomListCursorAdapter.releaseMediaPlayer();
-    }
-
-    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = null;
         String newTitle = null;
@@ -74,7 +67,7 @@ public class IdiomListFragment extends Fragment implements
         if (intent.hasExtra(Intent.EXTRA_TEXT)) {
             selection = intent.getStringExtra(Intent.EXTRA_TEXT);
         }
-        if(intent.hasExtra(Intent.EXTRA_TITLE)){
+        if (intent.hasExtra(Intent.EXTRA_TITLE)) {
             newTitle = intent.getStringExtra(Intent.EXTRA_TITLE);
             // Change the title in the toolbar
             getActivity().setTitle(newTitle);

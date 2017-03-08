@@ -5,8 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -84,17 +82,8 @@ public class DetailFragment extends Fragment implements
     @BindView(R.id.sound_icon_frame)
     FrameLayout soundPlayIconFrame;
 
-//    @BindView(R.id.sound_icon)
-//    ImageView soundPlayIcon;
-
     @BindView(R.id.youtube_layout)
     LinearLayout mYoutubeLayout;
-
-    // Handles playback of all the sound files
-    private MediaPlayer mediaPlayer;
-
-    // Handles audio focus when playing a sound file
-    private AudioManager audioManager;
 
     private static final String YOUTUBE_REQUEST_URL = "https://www.youtube.com/watch?v=";
 
@@ -138,9 +127,6 @@ public class DetailFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, rootView);
         mContentResolver = getActivity().getContentResolver();
-
-        // Create and setup the {@link AudioManager} to request audio focus
-        audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         Intent intent = getActivity().getIntent();
         mCurrentIdiomUri = intent.getData();
@@ -197,20 +183,16 @@ public class DetailFragment extends Fragment implements
             mYoutubeLayout.setOnClickListener(mYoutubeClickListener);
 
             // Set up the audio play button for the idiom
-            int idiomAudioId = context.getResources().getIdentifier(mIdiomAudio, "raw", context.getPackageName());
-            soundPlayIconFrame.setOnClickListener(new SoundOCL(idiomAudioId));
+            soundPlayIconFrame.setOnClickListener(new SoundOCL(mIdiomAudio));
 
             // Set up the audio play button for example 1
-            int eg1AudioId = context.getResources().getIdentifier(mEg1Audioid, "raw", context.getPackageName());
-            mEg1IconFrame.setOnClickListener(new SoundOCL(eg1AudioId));
+            mEg1IconFrame.setOnClickListener(new SoundOCL(mEg1Audioid));
 
             // Set up the audio play button for example 2
-            int eg2AudioId = context.getResources().getIdentifier(mEg2Audioid, "raw", context.getPackageName());
-            mEg2IconFrame.setOnClickListener(new SoundOCL(eg2AudioId));
+            mEg2IconFrame.setOnClickListener(new SoundOCL(mEg2Audioid));
 
             // Set up the audio play button for example 3
-            int eg3AudioId = context.getResources().getIdentifier(mEg3Audioid, "raw", context.getPackageName());
-            mEg3IconFrame.setOnClickListener(new SoundOCL(eg3AudioId));
+            mEg3IconFrame.setOnClickListener(new SoundOCL(mEg3Audioid));
 
             mIdiomNameTv.setText(mIdiomName);
             mPinyin1Tv.setText(mPinyin1);
@@ -246,77 +228,20 @@ public class DetailFragment extends Fragment implements
      * Override OnClickListener to have some arguments
      */
     class SoundOCL implements View.OnClickListener {
-        int audioFileId;
+        String audioFileName;
 
-        public SoundOCL(int audioFileId) {
-            this.audioFileId = audioFileId;
+        public SoundOCL(String audioFileName) {
+            this.audioFileName = audioFileName;
         }
 
         public void onClick(View v) {
-            // Release the MediaPlayer if it currently exists
-            releaseMediaPlayer();
-            int result = audioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-                    AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                // Create and setup the {@link MediaPlayer}
-                mediaPlayer = MediaPlayer.create(getContext(), audioFileId);
-
-                // Start playing the audio file
-                mediaPlayer.start();
-
-                // Setup a listener to stop and release the media player after playing
-                mediaPlayer.setOnCompletionListener(mCompletionListener);
-            }
+            // Start MediaPlayerService to play the audio
+            Intent playIntent = new Intent(getContext(), MediaPlayerService.class);
+            playIntent.putExtra(Intent.EXTRA_TEXT, audioFileName);
+            getActivity().startService(playIntent);
         }
     }
 
-    /**
-     * Clean up the media player by releasing its resources.
-     */
-    private void releaseMediaPlayer() {
-        if (mediaPlayer != null) {
-            // Release its resources
-            mediaPlayer.release();
-
-            // Set the media player back to null.
-            mediaPlayer = null;
-
-            // Abandon the audio focus
-            audioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
-        }
-    }
-
-    /*
-* This listener is triggered whenever the audio focus changes
-* */
-    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
-                    focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
-                // Pause playback and reset player to the start of the file
-                mediaPlayer.pause();
-                mediaPlayer.seekTo(0);
-            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                // Resume playback when focus is regained.
-                mediaPlayer.start();
-            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                // Stop playback and clean up resources
-                releaseMediaPlayer();
-            }
-        }
-    };
-
-    /**
-     * Triggered when the {@link MediaPlayer} has completed playing the audio file.
-     */
-    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mediaPlayer) {
-            // Release the media player resources.
-            releaseMediaPlayer();
-        }
-    };
 
     // Triggered when user clicks on the Youtube video area
     private View.OnClickListener mYoutubeClickListener = new View.OnClickListener() {
@@ -344,7 +269,7 @@ public class DetailFragment extends Fragment implements
                         Toast.LENGTH_SHORT).show();
                 // Change the favourite icon
                 Utilities.setFavouriteIcon(true, mFavouriteIcon);
-            }else {
+            } else {
                 mContentResolver.delete(
                         FavouritesEntry.CONTENT_URI,
                         FavouritesEntry.COLUMN_FAVORT_ID + "=?",
