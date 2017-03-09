@@ -2,7 +2,6 @@ package me.anky.coolchineseidioms;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.media.MediaPlayer;
 import android.widget.ImageView;
 
 import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
@@ -29,8 +28,10 @@ public class Utilities {
                 null
         );
         if (cursor != null & cursor.moveToFirst()) {
+            cursor.close();
             return true;
         } else {
+            cursor.close();
             return false;
         }
     }
@@ -43,18 +44,6 @@ public class Utilities {
         } else {
             imageView.setImageResource(R.drawable.ic_heart_outline);
             imageView.setTag(R.drawable.ic_heart_outline);
-        }
-    }
-
-    // Set audio play icon
-    public static void setAudioPlayIcon(MediaPlayer mediaPlayer, ImageView imageView) {
-        boolean isPlaying = mediaPlayer.isPlaying();
-        if (isPlaying) {
-            imageView.setImageResource(R.drawable.ic_pause_sound);
-            imageView.setTag(R.drawable.ic_pause_sound);
-        } else {
-            imageView.setImageResource(R.drawable.ic_play_sound);
-            imageView.setTag(R.drawable.ic_play_sound);
         }
     }
 

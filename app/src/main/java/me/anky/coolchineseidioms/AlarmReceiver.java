@@ -44,11 +44,11 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         Calendar now = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         // Set the alarm's trigger time to 4:30 a.m.
-        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.HOUR_OF_DAY, 4);
         calendar.set(Calendar.MINUTE, 30);
 
         if (!calendar.before(now)) {
-            calendar.add(Calendar.DATE, -1);
+            calendar.add(Calendar.DATE, 1);
         }
 
         // Set the alarm to fire at approximately 4:30 a.m., according to the device's

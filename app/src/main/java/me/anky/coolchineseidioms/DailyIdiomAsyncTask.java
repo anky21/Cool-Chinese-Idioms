@@ -64,6 +64,7 @@ class DailyIdiomAsyncTask extends AsyncTask<Context, Void, Void> {
             contentResolver.delete(DailyIdiomMEntry.CONTENT_URI, null, null);
             contentResolver.insert(DailyIdiomMEntry.CONTENT_URI, values);
         }
+        cursor.close();
         return null;
     }
 

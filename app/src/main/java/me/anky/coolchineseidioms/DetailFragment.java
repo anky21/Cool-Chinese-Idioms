@@ -153,6 +153,7 @@ public class DetailFragment extends Fragment implements
 
         // Bail early if the cursor is null or there is less than 1 row in the cursor
         if (cursor == null || cursor.getCount() < 1) {
+            cursor.close();
             return;
         }
 
@@ -211,6 +212,7 @@ public class DetailFragment extends Fragment implements
             mEg3ChnTv.setText(mExample3);
             mEg3EngTv.setText(mExample3Eng);
         }
+        cursor.close();
     }
 
     @Override

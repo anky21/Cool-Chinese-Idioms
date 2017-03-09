@@ -73,11 +73,15 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
 
-        // Set a repeating alarm to schedule the AsyncTask
-        alarm.setAlarm(getContext());
-
-        // Fetch idiom of the data from the database and show it in the CardView
-        setUpIdiomOfTheDay();
+        // When the app runs for the first time (the database is empty), run the AsyncTask
+        // and set the alarm
+        Cursor cursor = getContext().getContentResolver()
+                .query(DailyIdiomMEntry.CONTENT_URI, null, null, null, null);
+        if (!cursor.moveToFirst()) {
+            new DailyIdiomAsyncTask(this).execute(getContext());
+            alarm.setAlarm(getContext());
+        }
+        cursor.close();
 
         soundPlayIcon.setTag(R.drawable.ic_play_sound);
         // Set up OnClickListener for sound play button
@@ -96,13 +100,13 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
     @Override
     public void onResume() {
         super.onResume();
-        // Update the idiom of the day feature
+        // Fetch idiom of the day data from the database and show it on the screen
         setUpIdiomOfTheDay();
     }
 
     @Override
     public void onTaskCompleted() {
-        // Fetch idiom of the data from the database and show it in the CardView
+        // Fetch idiom of the day data from the database and show it on the screen
         setUpIdiomOfTheDay();
 
         // Update the App Widget when data is written into the database
@@ -129,6 +133,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             // Click on the card view to see detail view of idiom of the day
             cardView.setOnClickListener(mCardViewOCL);
         }
+        cursor.close();
     }
 
     // Update app widgets
