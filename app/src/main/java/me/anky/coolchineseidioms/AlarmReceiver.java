@@ -47,7 +47,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         calendar.set(Calendar.HOUR_OF_DAY, 4);
         calendar.set(Calendar.MINUTE, 30);
 
-        if (!calendar.before(now)) {
+        // If the alarm starting time is in the past, start the alarm one day later
+        if (calendar.before(now)) {
             calendar.add(Calendar.DATE, 1);
         }
 
@@ -65,5 +66,4 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
     }
-
 }

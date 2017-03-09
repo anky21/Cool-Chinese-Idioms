@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cool-Chinese-Idioms.iml" filepath="$PROJECT_DIR$/Cool-Chinese-Idioms.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/randomnumber/randomnumber.iml" filepath="$PROJECT_DIR$/randomnumber/randomnumber.iml" />
     </modules>
   </component>
 </project>
