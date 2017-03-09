@@ -3,6 +3,8 @@
     package="me.anky.coolchineseidioms">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -45,6 +47,15 @@
         <service android:name=".WidgetIntentService"/>
         <service android:name=".MediaPlayerService"
             android:exported="false"/>
+        <!-- Alarm -->
+        <service android:name=".SchedulingService"/>
+        <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".AlarmBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -27,6 +27,8 @@ import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
 public class HomeFragment extends Fragment implements OnTaskCompleted {
     public static final String ACTION_DATA_UPDATED = "me.anky.coolchineseidioms.ACTION_DATA_UPDATED";
 
+    AlarmReceiver alarm = new AlarmReceiver();
+
     private String mDailyIdiomId;
 
     private String mDailyIdiomAudio;
@@ -71,8 +73,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
 
-        // Get idiom of the day
-        new DailyIdiomAsyncTask(this).execute(getContext());
+        // Set a repeating alarm to schedule the AsyncTask
+        alarm.setAlarm(getContext());
 
         // Fetch idiom of the data from the database and show it in the CardView
         setUpIdiomOfTheDay();
@@ -89,6 +91,13 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         allIdiomsCourse.setOnClickListener(mAllIdiomsClickListener);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Update the idiom of the day feature
+        setUpIdiomOfTheDay();
     }
 
     @Override
@@ -123,7 +132,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
     }
 
     // Update app widgets
-    private static void updateWidgets(Context context) {
+    public static void updateWidgets(Context context) {
         // Setting the package ensures that only components in this app will receive the broadcast
         Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
                 .setPackage(context.getPackageName());
