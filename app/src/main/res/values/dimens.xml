@@ -29,4 +29,6 @@
     <dimen name="widget_default_width">240dp</dimen>
     <dimen name="widget_default_height">60dp</dimen>
 
+    <!-- Detail View -->
+    <dimen name="detailview_appbar_height">80dp</dimen>
 </resources>

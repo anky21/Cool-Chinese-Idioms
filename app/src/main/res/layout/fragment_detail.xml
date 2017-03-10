@@ -1,217 +1,252 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/margin_16dp"
-    android:paddingRight="@dimen/margin_16dp"
-    tools:context="me.anky.coolchineseidioms.DetailFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detailview_appbar_height"
+        android:background="?colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingRight="@dimen/margin_16dp"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+        tools:context="me.anky.coolchineseidioms.DetailFragment">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_0dp"
-            android:paddingTop="@dimen/margin_16dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/idiom_name_tv"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceLarge" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_0dp"
+                android:paddingTop="@dimen/margin_16dp">
 
-            <FrameLayout
-                android:id="@+id/favourite_button"
-                android:layout_width="@dimen/sound_icon_frame_size"
-                android:layout_height="@dimen/sound_icon_frame_size">
+                <TextView
+                    android:id="@+id/idiom_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceLarge" />
 
-                <ImageView
-                    android:id="@+id/favourite_icon"
-                    android:layout_width="@dimen/favourite_icon_size"
-                    android:layout_height="@dimen/favourite_icon_size"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:src="@drawable/ic_heart_outline" />
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/favourite_button"
+                    android:layout_width="@dimen/sound_icon_frame_size"
+                    android:layout_height="@dimen/sound_icon_frame_size">
 
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/favourite_icon"
+                        android:layout_width="@dimen/favourite_icon_size"
+                        android:layout_height="@dimen/favourite_icon_size"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:src="@drawable/ic_heart_outline" />
+                </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_8dp">
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_8dp">
+
+                <TextView
+                    android:id="@+id/pinyin1_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <FrameLayout
+                    android:id="@+id/sound_icon_frame"
+                    style="@style/SoundIconContainer">
+
+                    <ImageView
+                        android:id="@+id/sound_icon"
+                        style="@style/SoundIcon" />
+                </FrameLayout>
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/pinyin1_tv"
+                android:id="@+id/translation_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_12dp"
+                android:text="@string/translation_tv" />
+
+            <TextView
+                android:id="@+id/explanation_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_12dp"
+                android:text="@string/explanation_tv" />
+
+            <!-- Layout for the YouTube Video -->
+            <include layout="@layout/divider_view" />
+
+            <LinearLayout
+                android:id="@+id/youtube_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-            <FrameLayout
-                android:id="@+id/sound_icon_frame"
-                style="@style/SoundIconContainer">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_12dp"
+                android:paddingTop="@dimen/margin_12dp">
 
                 <ImageView
-                    android:id="@+id/sound_icon"
-                    style="@style/SoundIcon" />
-            </FrameLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp"
+                    android:src="@drawable/ic_play_circle_outline" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/youtube_link_description" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/translation_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_12dp"
-            android:text="@string/translation_tv" />
-
-        <TextView
-            android:id="@+id/explanation_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_12dp"
-            android:text="@string/explanation_tv" />
-
-        <!-- Layout for the YouTube Video -->
-        <include layout="@layout/divider_view" />
-
-        <LinearLayout
-            android:id="@+id/youtube_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_12dp"
-            android:paddingTop="@dimen/margin_12dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/margin_12dp"
-                android:paddingRight="@dimen/margin_12dp"
-                android:src="@drawable/ic_play_circle_outline" />
+            <include layout="@layout/divider_view" />
 
             <TextView
+                android:id="@+id/examples_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/youtube_link_description" />
-        </LinearLayout>
+                android:paddingBottom="@dimen/margin_12dp"
+                android:paddingTop="@dimen/margin_12dp"
+                android:text="@string/examples_tv"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/primary_text_color" />
 
-        <include layout="@layout/divider_view" />
-
-        <TextView
-            android:id="@+id/examples_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_12dp"
-            android:paddingTop="@dimen/margin_12dp"
-            android:text="@string/examples_tv"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/primary_text_color" />
-
-        <!-- Layout for sample sentence 1 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            <!-- Layout for sample sentence 1 -->
             <LinearLayout
-                android:layout_width="@dimen/margin_0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/eg1_chn_tv"
-                    style="@style/ExampleChinese" />
+                <LinearLayout
+                    android:layout_width="@dimen/margin_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/eg1_eng_tv"
-                    style="@style/ExampleEnglish" />
+                    <TextView
+                        android:id="@+id/eg1_chn_tv"
+                        style="@style/ExampleChinese" />
+
+                    <TextView
+                        android:id="@+id/eg1_eng_tv"
+                        style="@style/ExampleEnglish" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/eg1_icon_frame"
+                    style="@style/SoundIconContainer">
+
+                    <ImageView
+                        android:id="@+id/eg1_icon"
+                        style="@style/SoundIcon" />
+                </FrameLayout>
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/eg1_icon_frame"
-                style="@style/SoundIconContainer">
-
-                <ImageView
-                    android:id="@+id/eg1_icon"
-                    style="@style/SoundIcon" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <!-- Layout for sample sentence 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            <!-- Layout for sample sentence 2 -->
             <LinearLayout
-                android:layout_width="@dimen/margin_0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/eg2_chn_tv"
-                    style="@style/ExampleChinese" />
+                <LinearLayout
+                    android:layout_width="@dimen/margin_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/eg2_eng_tv"
-                    style="@style/ExampleEnglish" />
+                    <TextView
+                        android:id="@+id/eg2_chn_tv"
+                        style="@style/ExampleChinese" />
+
+                    <TextView
+                        android:id="@+id/eg2_eng_tv"
+                        style="@style/ExampleEnglish" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/eg2_icon_frame"
+                    style="@style/SoundIconContainer">
+
+                    <ImageView
+                        android:id="@+id/eg2_icon"
+                        style="@style/SoundIcon" />
+                </FrameLayout>
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/eg2_icon_frame"
-                style="@style/SoundIconContainer">
-
-                <ImageView
-                    android:id="@+id/eg2_icon"
-                    style="@style/SoundIcon" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <!-- Layout for sample sentence 3 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            <!-- Layout for sample sentence 3 -->
             <LinearLayout
-                android:layout_width="@dimen/margin_0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/eg3_chn_tv"
-                    style="@style/ExampleChinese" />
+                <LinearLayout
+                    android:layout_width="@dimen/margin_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/eg3_eng_tv"
-                    style="@style/ExampleEnglish" />
+                    <TextView
+                        android:id="@+id/eg3_chn_tv"
+                        style="@style/ExampleChinese" />
+
+                    <TextView
+                        android:id="@+id/eg3_eng_tv"
+                        style="@style/ExampleEnglish" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/eg3_icon_frame"
+                    style="@style/SoundIconContainer">
+
+                    <ImageView
+                        android:id="@+id/eg3_icon"
+                        style="@style/SoundIcon" />
+                </FrameLayout>
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/eg3_icon_frame"
-                style="@style/SoundIconContainer">
-
-                <ImageView
-                    android:id="@+id/eg3_icon"
-                    style="@style/SoundIcon" />
-            </FrameLayout>
         </LinearLayout>
 
-    </LinearLayout>
-
-</ScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

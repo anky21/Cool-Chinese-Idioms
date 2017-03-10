@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -33,6 +34,9 @@ import static me.anky.coolchineseidioms.UserContract.FavouritesEntry;
  */
 public class DetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
+    @BindView(R.id.collapsing_toolbar_layout)
+    CollapsingToolbarLayout mCollapsingToolBar;
 
     @BindView(R.id.idiom_name_tv)
     TextView mIdiomNameTv;
@@ -153,7 +157,6 @@ public class DetailFragment extends Fragment implements
 
         // Bail early if the cursor is null or there is less than 1 row in the cursor
         if (cursor == null || cursor.getCount() < 1) {
-            cursor.close();
             return;
         }
 
@@ -175,6 +178,8 @@ public class DetailFragment extends Fragment implements
             mEg1Audioid = cursor.getString(Utilities.COL_EXAMPLE1_AUDIO);
             mEg2Audioid = cursor.getString(Utilities.COL_EXAMPLE2_AUDIO);
             mEg3Audioid = cursor.getString(Utilities.COL_EXAMPLE3_AUDIO);
+
+            mCollapsingToolBar.setTitle(mIdiomName);
 
             // Check and set the favourite icon
             Utilities.setFavouriteIcon(Utilities.isFavourite(context, mIdiomId), mFavouriteIcon);
@@ -212,7 +217,6 @@ public class DetailFragment extends Fragment implements
             mEg3ChnTv.setText(mExample3);
             mEg3EngTv.setText(mExample3Eng);
         }
-        cursor.close();
     }
 
     @Override

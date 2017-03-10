@@ -31,7 +31,8 @@
             android:exported="false" />
 
         <activity android:name=".IdiomListActivity" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity"
+            android:theme="@style/AppTheme.Details"></activity>
         <!-- App Widget -->
         <receiver
             android:name=".WidgetProvider"
