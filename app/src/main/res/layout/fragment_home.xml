@@ -11,7 +11,9 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_16dp"
         android:paddingLeft="@dimen/margin_8dp"
-        android:paddingRight="@dimen/margin_8dp">
+        android:paddingStart="@dimen/margin_8dp"
+        android:paddingRight="@dimen/margin_8dp"
+        android:paddingEnd="@dimen/margin_8dp">
 
         <!-- CardView: Idiom of the Day -->
         <include layout="@layout/cardview_layout" />
@@ -58,5 +60,4 @@
             style="@style/CourseStyle"
             android:text="@string/all_idioms_course" />
     </LinearLayout>
-
 </ScrollView>

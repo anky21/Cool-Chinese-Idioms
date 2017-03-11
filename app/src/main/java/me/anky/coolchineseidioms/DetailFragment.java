@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 import me.anky.coolchineseidioms.utilities.MediaPlayerService;
 import me.anky.coolchineseidioms.utilities.Utilities;
 
+import static android.support.design.R.id.right;
 import static me.anky.coolchineseidioms.userdata.UserContract.FavouritesEntry;
 
 /**
@@ -152,6 +153,13 @@ public class DetailFragment extends Fragment implements
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
+        // RTL support for the collapsing toolbar
+        boolean isRightToLeft = getResources().getBoolean(R.bool.is_right_to_left);
+        if (isRightToLeft) {
+            mCollapsingToolBar.setCollapsedTitleGravity(right);
+            mCollapsingToolBar.setExpandedTitleGravity(right);
+        }
 
         return rootView;
     }

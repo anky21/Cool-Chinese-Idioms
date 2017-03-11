@@ -39,7 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/margin_16dp"
+        android:paddingStart="@dimen/margin_16dp"
         android:paddingRight="@dimen/margin_16dp"
+        android:paddingEnd="@dimen/margin_16dp"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
         tools:context="me.anky.coolchineseidioms.DetailFragment">
 
@@ -74,6 +76,7 @@
                         android:layout_height="@dimen/favourite_icon_size"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
                         android:src="@drawable/ic_heart_outline" />
                 </FrameLayout>
 
@@ -134,7 +137,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingStart="@dimen/margin_12dp"
                     android:paddingRight="@dimen/margin_12dp"
+                    android:paddingEnd="@dimen/margin_12dp"
                     android:src="@drawable/ic_play_circle_outline" />
 
                 <TextView

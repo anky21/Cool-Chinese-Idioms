@@ -13,7 +13,9 @@
         style="@style/TextViewInList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="start|left|center_vertical"
+        android:textAlignment="viewStart" />
 
     <!-- Include the layout for playing audio icon -->
     <include layout="@layout/play_sound_icon" />
