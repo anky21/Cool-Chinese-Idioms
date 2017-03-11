@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
 import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
@@ -56,9 +57,14 @@ public class WidgetIntentService extends IntentService {
 
             // Create an Intent to launch MainActivity
             Intent launchIntent = new Intent(this, DetailActivity.class);
+            Intent upIntent = new Intent(this, MainActivity.class);
             Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(idiomId);
             launchIntent.setData(currentIdiomUri);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, launchIntent, 0);
+            // Create back stack when launching the Detail activity
+            PendingIntent pendingIntent = TaskStackBuilder.create(this)
+                    .addNextIntent(upIntent)
+                    .addNextIntent(launchIntent)
+                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
 
             // Create an Intent to play an audio file
