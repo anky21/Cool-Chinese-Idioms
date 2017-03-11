@@ -17,9 +17,10 @@ import android.widget.ListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.utilities.IdiomListCursorAdapter;
 
-import static me.anky.coolchineseidioms.Utilities.IDIOM_FEW_COLUMNS;
+import static me.anky.coolchineseidioms.utilities.Utilities.IDIOM_FEW_COLUMNS;
 
 /**
  * Created by Anky An on 1/03/2017.

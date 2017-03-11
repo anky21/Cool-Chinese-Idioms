@@ -12,6 +12,9 @@ import com.facebook.stetho.Stetho;
 
 import java.io.IOException;
 
+import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionDbHelper;
+import me.anky.coolchineseidioms.utilities.MainScreenFragmentAdapter;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     IdiomCollectionDbHelper dbHelper = null;

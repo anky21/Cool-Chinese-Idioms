@@ -1,4 +1,4 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.userdata;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -10,13 +10,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
-
 import static android.R.attr.id;
-import static me.anky.coolchineseidioms.UserContract.CONTENT_AUTHORITY;
-import static me.anky.coolchineseidioms.UserContract.FavouritesEntry;
-import static me.anky.coolchineseidioms.UserContract.PATH_DAILYIDIOM;
-import static me.anky.coolchineseidioms.UserContract.PATH_FAVOURITES;
 
 /**
  * Created by Anky An on 5/03/2017.
@@ -35,9 +29,9 @@ public class UserProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_FAVOURITES, FAVOURITES);
-        sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_FAVOURITES + "/#", FAVOURITE_ID);
-        sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_DAILYIDIOM, DAILYIDIOM);
+        sUriMatcher.addURI(UserContract.CONTENT_AUTHORITY, UserContract.PATH_FAVOURITES, FAVOURITES);
+        sUriMatcher.addURI(UserContract.CONTENT_AUTHORITY, UserContract.PATH_FAVOURITES + "/#", FAVOURITE_ID);
+        sUriMatcher.addURI(UserContract.CONTENT_AUTHORITY, UserContract.PATH_DAILYIDIOM, DAILYIDIOM);
     }
 
 
@@ -58,17 +52,17 @@ public class UserProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         switch (match) {
             case FAVOURITES:
-                cursor = db.query(FavouritesEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = db.query(UserContract.FavouritesEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             case FAVOURITE_ID:
-                selection = FavouritesEntry._ID + "=?";
+                selection = UserContract.FavouritesEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                cursor = db.query(FavouritesEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = db.query(UserContract.FavouritesEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             case DAILYIDIOM:
-                cursor = db.query(DailyIdiomMEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = db.query(UserContract.DailyIdiomMEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             default:
@@ -86,11 +80,11 @@ public class UserProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case FAVOURITES:
-                return FavouritesEntry.CONTENT_LIST_TYPE;
+                return UserContract.FavouritesEntry.CONTENT_LIST_TYPE;
             case FAVOURITE_ID:
-                return FavouritesEntry.CONTENT_ITEM_TYPE;
+                return UserContract.FavouritesEntry.CONTENT_ITEM_TYPE;
             case DAILYIDIOM:
-                return DailyIdiomMEntry.CONTENT_ITEM_TYPE;
+                return UserContract.DailyIdiomMEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri + " with match " + match);
         }
@@ -107,7 +101,7 @@ public class UserProvider extends ContentProvider {
         switch (match) {
             case FAVOURITES: {
                 // Insert the new idiom with the given values
-                long id = db.insert(FavouritesEntry.TABLE_NAME, null, contentValues);
+                long id = db.insert(UserContract.FavouritesEntry.TABLE_NAME, null, contentValues);
                 if (id > 0)
                     returnUri = ContentUris.withAppendedId(uri, id);
                 else
@@ -116,7 +110,7 @@ public class UserProvider extends ContentProvider {
             }
             case DAILYIDIOM: {
                 // Insert the new idiom with the given values
-                long id = db.insert(DailyIdiomMEntry.TABLE_NAME, null, contentValues);
+                long id = db.insert(UserContract.DailyIdiomMEntry.TABLE_NAME, null, contentValues);
                 if (id > 0)
                     returnUri = ContentUris.withAppendedId(uri, id);
                 else
@@ -143,15 +137,15 @@ public class UserProvider extends ContentProvider {
 
         switch (match) {
             case FAVOURITES:
-                rowsDeleted = db.delete(FavouritesEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(UserContract.FavouritesEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case FAVOURITE_ID:
-                selection = FavouritesEntry._ID + "=?";
+                selection = UserContract.FavouritesEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                rowsDeleted = db.delete(FavouritesEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(UserContract.FavouritesEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case DAILYIDIOM:
-                rowsDeleted = db.delete(DailyIdiomMEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(UserContract.DailyIdiomMEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
@@ -172,10 +166,10 @@ public class UserProvider extends ContentProvider {
         int rowsUpdated;
         switch (match) {
             case FAVOURITES:
-                rowsUpdated = db.update(FavouritesEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+                rowsUpdated = db.update(UserContract.FavouritesEntry.TABLE_NAME, contentValues, selection, selectionArgs);
                 break;
             case DAILYIDIOM:
-                rowsUpdated = db.update(DailyIdiomMEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+                rowsUpdated = db.update(UserContract.DailyIdiomMEntry.TABLE_NAME, contentValues, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

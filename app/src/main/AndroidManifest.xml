@@ -22,12 +22,12 @@
         </activity>
 
         <provider
-            android:name=".IdiomCollectionProvider"
+            android:name=".idiomdatabase.IdiomCollectionProvider"
             android:authorities="me.anky.coolchineseidioms"
             android:exported="false" />
 
         <provider
-            android:name=".UserProvider"
+            android:name=".userdata.UserProvider"
             android:authorities="me.anky.coolchineseidioms.user"
             android:exported="false" />
 
@@ -39,7 +39,7 @@
             android:theme="@style/AppTheme.Details"></activity>
         <!-- App Widget -->
         <receiver
-            android:name=".WidgetProvider"
+            android:name=".widget.WidgetProvider"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -49,13 +49,13 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_info" />
         </receiver>
-        <service android:name=".WidgetIntentService"/>
-        <service android:name=".MediaPlayerService"
+        <service android:name=".widget.WidgetIntentService"/>
+        <service android:name=".utilities.MediaPlayerService"
             android:exported="false"/>
         <!-- Alarm -->
-        <service android:name=".SchedulingService"/>
-        <receiver android:name=".AlarmReceiver" />
-        <receiver android:name=".AlarmBootReceiver"
+        <service android:name=".alarm.SchedulingService"/>
+        <receiver android:name=".alarm.AlarmReceiver" />
+        <receiver android:name=".alarm.AlarmBootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>

@@ -1,4 +1,4 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.widget;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -11,9 +11,14 @@ import android.support.annotation.Nullable;
 import android.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
-import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.DetailActivity;
+import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.MainActivity;
+import me.anky.coolchineseidioms.utilities.MediaPlayerService;
+import me.anky.coolchineseidioms.R;
+import me.anky.coolchineseidioms.utilities.Utilities;
 
-import static me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry.CONTENT_URI;
+import static me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry.CONTENT_URI;
 
 /**
  * Created by Anky An on 6/03/2017.

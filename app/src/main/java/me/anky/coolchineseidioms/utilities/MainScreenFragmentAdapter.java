@@ -1,9 +1,14 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.utilities;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import me.anky.coolchineseidioms.CategoriesFragment;
+import me.anky.coolchineseidioms.HomeFragment;
+import me.anky.coolchineseidioms.IdiomBankFragment;
+import me.anky.coolchineseidioms.R;
 
 /**
  * Created by Anky An on 15/02/2017.

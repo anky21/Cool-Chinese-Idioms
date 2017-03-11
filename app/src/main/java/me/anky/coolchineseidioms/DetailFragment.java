@@ -29,8 +29,10 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.anky.coolchineseidioms.utilities.MediaPlayerService;
+import me.anky.coolchineseidioms.utilities.Utilities;
 
-import static me.anky.coolchineseidioms.UserContract.FavouritesEntry;
+import static me.anky.coolchineseidioms.userdata.UserContract.FavouritesEntry;
 
 /**
  * A simple {@link Fragment} subclass.

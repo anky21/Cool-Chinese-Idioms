@@ -1,4 +1,4 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.idiomdatabase;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;

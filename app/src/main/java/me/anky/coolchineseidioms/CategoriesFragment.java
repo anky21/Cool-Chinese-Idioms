@@ -15,7 +15,9 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.utilities.IdiomCategory;
+import me.anky.coolchineseidioms.utilities.IdiomCategoryAdapter;
 
 
 /**

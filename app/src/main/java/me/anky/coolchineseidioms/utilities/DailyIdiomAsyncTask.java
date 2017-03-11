@@ -1,4 +1,4 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.utilities;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -9,15 +9,15 @@ import android.os.AsyncTask;
 
 import me.anky.randomnumber.CreateRandomNumber;
 
-import static me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
-import static me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
+import static me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
+import static me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry;
 
 /**
  * Created by Anky An on 20/02/2017.
  * anky25@gmail.com
  */
 
-class DailyIdiomAsyncTask extends AsyncTask<Context, Void, Void> {
+public class DailyIdiomAsyncTask extends AsyncTask<Context, Void, Void> {
     private Context context;
     public OnTaskCompleted listener = null;
 

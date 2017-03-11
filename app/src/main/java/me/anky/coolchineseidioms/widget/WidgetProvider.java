@@ -1,10 +1,12 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import me.anky.coolchineseidioms.HomeFragment;
 
 /**
  * Created by Anky An on 5/03/2017.

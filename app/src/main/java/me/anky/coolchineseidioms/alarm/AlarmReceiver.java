@@ -1,4 +1,4 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.alarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

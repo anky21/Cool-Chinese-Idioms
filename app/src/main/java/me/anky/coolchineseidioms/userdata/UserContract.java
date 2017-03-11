@@ -1,4 +1,4 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.userdata;
 
 /**
  * Created by Anky An on 5/03/2017.

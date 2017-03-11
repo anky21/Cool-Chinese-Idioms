@@ -19,9 +19,11 @@ import android.widget.RelativeLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.utilities.IdiomListCursorAdapter;
+import me.anky.coolchineseidioms.utilities.Utilities;
 
-import static me.anky.coolchineseidioms.UserContract.FavouritesEntry;
+import static me.anky.coolchineseidioms.userdata.UserContract.FavouritesEntry;
 
 
 /**

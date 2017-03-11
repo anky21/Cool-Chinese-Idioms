@@ -1,4 +1,4 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.utilities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import me.anky.coolchineseidioms.R;
+import me.anky.coolchineseidioms.utilities.MediaPlayerService;
+import me.anky.coolchineseidioms.utilities.Utilities;
 
 /**
  * Created by Anky An on 28/02/2017.

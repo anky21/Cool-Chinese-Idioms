@@ -1,12 +1,13 @@
-package me.anky.coolchineseidioms;
+package me.anky.coolchineseidioms.utilities;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.widget.ImageView;
 
-import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
-import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
-import me.anky.coolchineseidioms.UserContract.FavouritesEntry;
+import me.anky.coolchineseidioms.R;
+import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry;
+import me.anky.coolchineseidioms.userdata.UserContract.FavouritesEntry;
 
 /**
  * Created by Anky An on 22/02/2017.

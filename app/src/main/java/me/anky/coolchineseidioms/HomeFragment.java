@@ -18,8 +18,13 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.anky.coolchineseidioms.IdiomCollectionContract.IdiomCollectionEntry;
-import me.anky.coolchineseidioms.UserContract.DailyIdiomMEntry;
+import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
+import me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry;
+import me.anky.coolchineseidioms.alarm.AlarmReceiver;
+import me.anky.coolchineseidioms.utilities.DailyIdiomAsyncTask;
+import me.anky.coolchineseidioms.utilities.MediaPlayerService;
+import me.anky.coolchineseidioms.utilities.OnTaskCompleted;
+import me.anky.coolchineseidioms.utilities.Utilities;
 
 /**
  * A simple {@link Fragment} subclass.
