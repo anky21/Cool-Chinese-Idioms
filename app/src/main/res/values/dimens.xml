@@ -31,4 +31,5 @@
 
     <!-- Detail View -->
     <dimen name="detailview_appbar_height">80dp</dimen>
+    <dimen name="title_left_margin">64dp</dimen>
 </resources>
