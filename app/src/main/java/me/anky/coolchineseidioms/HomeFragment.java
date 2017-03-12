@@ -131,7 +131,10 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             mDailyIdiomAudio = cursor.getString(Utilities.COL_DAILY_IDIOM_AUDIO);
             String idiomTranslation = cursor.getString(Utilities.COL_DAILY_IDIOM_TRANSLATION);
             mIdiomOfTheDay.setText(idiomName);
+            mIdiomOfTheDay.setContentDescription(idiomName);
             mIdiomTranslation.setText(idiomTranslation);
+            mIdiomTranslation.setContentDescription(getString(R.string.cd_translation) + idiomTranslation);
+            soundPlayIconFrame.setContentDescription(getString(R.string.cd_sound_play_button) + idiomName);
 
             // Change background colour of the CardView
             cardView.setCardBackgroundColor(Color.WHITE);

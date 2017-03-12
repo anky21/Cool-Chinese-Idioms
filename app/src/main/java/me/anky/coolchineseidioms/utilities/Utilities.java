@@ -38,13 +38,17 @@ public class Utilities {
     }
 
     // Set the favourite icon
-    public static void setFavouriteIcon(boolean isFavourite, ImageView imageView) {
+    public static void setFavouriteIcon(Context context, boolean isFavourite, ImageView imageView) {
         if (isFavourite) {
             imageView.setImageResource(R.drawable.ic_red_heart);
             imageView.setTag(R.drawable.ic_red_heart);
+            imageView.setContentDescription(context.getResources()
+                    .getString(R.string.cd_unmark_as_favourite));
         } else {
             imageView.setImageResource(R.drawable.ic_heart_outline);
             imageView.setTag(R.drawable.ic_heart_outline);
+            imageView.setContentDescription(context.getResources()
+                    .getString(R.string.cd_mark_as_favourite));
         }
     }
 

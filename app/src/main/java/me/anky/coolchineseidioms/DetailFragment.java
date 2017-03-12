@@ -150,9 +150,9 @@ public class DetailFragment extends Fragment implements
         setHasOptionsMenu(true);
 
         // Set a Toolbar to act as the ActionBar for this Activity window
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
         // RTL support for the collapsing toolbar
         boolean isRightToLeft = getResources().getBoolean(R.bool.is_right_to_left);
@@ -216,7 +216,7 @@ public class DetailFragment extends Fragment implements
             mCollapsingToolBar.setTitle(mIdiomName);
 
             // Check and set the favourite icon
-            Utilities.setFavouriteIcon(Utilities.isFavourite(context, mIdiomId), mFavouriteIcon);
+            Utilities.setFavouriteIcon(context,Utilities.isFavourite(context, mIdiomId), mFavouriteIcon);
             mFavouriteButton.setOnClickListener(mFavouriteButtonClickListener);
 
             // Open Youtube or a website to see a video
@@ -224,32 +224,50 @@ public class DetailFragment extends Fragment implements
 
             // Set up the audio play button for the idiom
             soundPlayIconFrame.setOnClickListener(new SoundOCL(mIdiomAudio));
+            soundPlayIconFrame.setContentDescription(context.getResources()
+                    .getString(R.string.cd_sound_play_button) + mIdiomAudio);
 
             // Set up the audio play button for example 1
             mEg1IconFrame.setOnClickListener(new SoundOCL(mEg1Audioid));
+            mEg1IconFrame.setContentDescription(context.getResources()
+                    .getString(R.string.cd_sound_play_button) + mEg1Audioid);
 
             // Set up the audio play button for example 2
             mEg2IconFrame.setOnClickListener(new SoundOCL(mEg2Audioid));
+            mEg2IconFrame.setContentDescription(context.getResources()
+                    .getString(R.string.cd_sound_play_button) + mEg2Audioid);
 
             // Set up the audio play button for example 3
             mEg3IconFrame.setOnClickListener(new SoundOCL(mEg3Audioid));
+            mEg3IconFrame.setContentDescription(context.getResources()
+                    .getString(R.string.cd_sound_play_button) + mEg3Audioid);
 
             mIdiomNameTv.setText(mIdiomName);
+            mIdiomNameTv.setContentDescription(mIdiomName);
             mPinyin1Tv.setText(mPinyin1);
+            mPinyin1Tv.setContentDescription(getString(R.string.cd_pronunciation) + mPinyin1);
             int translationLength = mTranslationTv.getText().length();
             mTranslationTv.append(" " + mTranslation);
             changeTextStyle(mTranslationTv, translationLength);
+            mTranslationTv.setContentDescription(mTranslation);
 
             int explanationLength = mExplanationTv.getText().length();
             mExplanationTv.append(" " + mExplanationEng);
             changeTextStyle(mExplanationTv, explanationLength);
+            mExplanationTv.setContentDescription(mExplanationEng);
 
             mEg1ChnTv.setText(mExample1);
+            mEg1ChnTv.setContentDescription(mExample1);
             mEg1EngTv.setText(mExample1Eng);
+            mEg1EngTv.setContentDescription(mExample1Eng);
             mEg2ChnTv.setText(mExample2);
+            mEg2ChnTv.setContentDescription(mExample2);
             mEg2EngTv.setText(mExample2Eng);
+            mEg2EngTv.setContentDescription(mExample2Eng);
             mEg3ChnTv.setText(mExample3);
+            mEg3ChnTv.setContentDescription(mExample3);
             mEg3EngTv.setText(mExample3Eng);
+            mEg3EngTv.setContentDescription(mExample3Eng);
         }
     }
 
@@ -308,7 +326,7 @@ public class DetailFragment extends Fragment implements
                 Toast.makeText(getContext(), R.string.added_to_favourites,
                         Toast.LENGTH_SHORT).show();
                 // Change the favourite icon
-                Utilities.setFavouriteIcon(true, mFavouriteIcon);
+                Utilities.setFavouriteIcon(getContext(),true, mFavouriteIcon);
             } else {
                 mContentResolver.delete(
                         FavouritesEntry.CONTENT_URI,
@@ -316,7 +334,7 @@ public class DetailFragment extends Fragment implements
                         new String[]{mIdiomId}
                 );
                 // Change the favourite icon
-                Utilities.setFavouriteIcon(false, mFavouriteIcon);
+                Utilities.setFavouriteIcon(getContext(),false, mFavouriteIcon);
                 Toast.makeText(getContext(), R.string.removed_from_favourites,
                         Toast.LENGTH_SHORT).show();
             }

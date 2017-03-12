@@ -129,6 +129,7 @@
                 android:id="@+id/youtube_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/youtube_link_description"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/margin_12dp"
                 android:paddingTop="@dimen/margin_12dp">
@@ -158,6 +159,7 @@
                 android:paddingBottom="@dimen/margin_12dp"
                 android:paddingTop="@dimen/margin_12dp"
                 android:text="@string/examples_tv"
+                android:contentDescription="@string/examples_tv"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/primary_text_color" />
 

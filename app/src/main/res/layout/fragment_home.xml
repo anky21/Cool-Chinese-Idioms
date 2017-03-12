@@ -25,39 +25,45 @@
             android:paddingBottom="@dimen/margin_8dp"
             android:paddingTop="@dimen/margin_8dp"
             android:text="@string/course_list_title"
+            android:contentDescription="@string/course_list_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
             android:id="@+id/common_idioms_course"
             style="@style/CourseStyle"
-            android:text="@string/course_most_commonly_used" />
+            android:text="@string/course_most_commonly_used"
+            android:contentDescription="@string/course_most_commonly_used"/>
 
         <include layout="@layout/divider_view" />
 
         <TextView
             android:id="@+id/beginner_level_course"
             style="@style/CourseStyle"
-            android:text="@string/course_beginner_level" />
+            android:text="@string/course_beginner_level"
+            android:contentDescription="@string/course_beginner_level"/>
 
         <include layout="@layout/divider_view" />
 
         <TextView
             android:id="@+id/intermediate_level_course"
             style="@style/CourseStyle"
-            android:text="@string/course_intermediate_level" />
+            android:text="@string/course_intermediate_level"
+            android:contentDescription="@string/course_intermediate_level"/>
 
         <include layout="@layout/divider_view" />
 
         <TextView
             android:id="@+id/advanced_level_course"
             style="@style/CourseStyle"
-            android:text="@string/course_advanced_level" />
+            android:text="@string/course_advanced_level"
+            android:contentDescription="@string/course_advanced_level"/>
 
         <include layout="@layout/divider_view" />
 
         <TextView
             android:id="@+id/all_idioms_course"
             style="@style/CourseStyle"
-            android:text="@string/all_idioms_course" />
+            android:text="@string/all_idioms_course"
+            android:contentDescription="@string/all_idioms_course"/>
     </LinearLayout>
 </ScrollView>

@@ -44,6 +44,7 @@ public class IdiomCategoryAdapter extends ArrayAdapter<IdiomCategory> {
         String categoryName = currentCategory.getCategory();
         TextView categoryTv = (TextView)listItemView.findViewById(R.id.category_name_tv);
         categoryTv.setText(categoryName);
+        categoryTv.setContentDescription(categoryName);
 
         return listItemView;
     }

@@ -25,4 +25,11 @@
     <string name="removed_from_favourites">This idiom is removed from Favourites</string>
     <string name="msg_add_favourite_idioms">Mark some idioms as Favourite, and they will show up here!</string>
 
+    <!-- Content descriptions -->
+    <string name="cd_translation">Translation</string>
+    <string name="cd_sound_play_button">Play the audio for idiom</string>
+    <string name="cd_pronunciation">Pronunciation is</string>
+    <string name="cd_unmark_as_favourite">Unmark as favourite</string>
+    <string name="cd_mark_as_favourite">Mark as favourite</string>
+
 </resources>

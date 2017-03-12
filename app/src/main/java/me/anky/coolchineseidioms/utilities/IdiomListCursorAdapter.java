@@ -11,8 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import me.anky.coolchineseidioms.R;
-import me.anky.coolchineseidioms.utilities.MediaPlayerService;
-import me.anky.coolchineseidioms.utilities.Utilities;
 
 /**
  * Created by Anky An on 28/02/2017.
@@ -53,6 +51,9 @@ public class IdiomListCursorAdapter extends CursorAdapter {
 
         // Update TextViews with the attributes for the current idiom
         mainViewHolder.idiomName.setText(idiomName);
+        mainViewHolder.idiomName.setContentDescription(idiomName);
+        mainViewHolder.soundPlayButton.setContentDescription(context.getResources()
+                .getString(R.string.cd_sound_play_button) + idiomName);
         mainViewHolder.soundPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
