@@ -98,6 +98,9 @@ public class IdiomListFragment extends Fragment implements
             Uri currentIdiomUri = IdiomCollectionEntry.buildIdiomUriWithId(id);
             intent.setData(currentIdiomUri);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 }

@@ -159,6 +159,9 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             String newTitle = commonIdiomsCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 
@@ -172,6 +175,9 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             String newTitle = beginnerLevelCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 
@@ -185,6 +191,9 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             String newTitle = intermediateLevelCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 
@@ -198,6 +207,9 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             String newTitle = advancedLevelCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 
@@ -209,6 +221,9 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             String newTitle = allIdiomsCourse.getText().toString();
             intent.putExtra(Intent.EXTRA_TITLE, newTitle);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 
@@ -231,6 +246,9 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(mDailyIdiomId);
             intent.setData(currentIdiomUri);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 }

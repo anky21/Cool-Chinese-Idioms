@@ -61,6 +61,9 @@ public class CategoriesFragment extends Fragment {
                 intent.putExtra(Intent.EXTRA_TEXT, selection);
                 intent.putExtra(Intent.EXTRA_TITLE, newTitle);
                 startActivity(intent);
+
+                // Override the transition
+                getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             }
         });
 

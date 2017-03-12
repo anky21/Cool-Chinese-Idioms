@@ -102,6 +102,9 @@ public class IdiomBankFragment extends Fragment implements
             Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(idiomId);
             intent.setData(currentIdiomUri);
             startActivity(intent);
+
+            // Override the transition
+            getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         }
     };
 }
