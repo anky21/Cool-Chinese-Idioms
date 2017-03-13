@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -16,11 +17,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.anky.coolchineseidioms.alarm.AlarmReceiver;
 import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
 import me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry;
-import me.anky.coolchineseidioms.alarm.AlarmReceiver;
 import me.anky.coolchineseidioms.utilities.DailyIdiomAsyncTask;
 import me.anky.coolchineseidioms.utilities.MediaPlayerService;
 import me.anky.coolchineseidioms.utilities.OnTaskCompleted;
@@ -32,6 +35,7 @@ import me.anky.coolchineseidioms.utilities.Utilities;
 public class HomeFragment extends Fragment implements OnTaskCompleted {
     public static final String ACTION_DATA_UPDATED = "me.anky.coolchineseidioms.ACTION_DATA_UPDATED";
 
+    private FirebaseAnalytics mFirebaseAnalytics;
     AlarmReceiver alarm = new AlarmReceiver();
 
     private String mDailyIdiomId;
@@ -70,6 +74,12 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
 
     public HomeFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -249,6 +259,12 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(mDailyIdiomId);
             intent.setData(currentIdiomUri);
             startActivity(intent);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Idiom of the day");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "User Click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
             // Override the transition
             getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);

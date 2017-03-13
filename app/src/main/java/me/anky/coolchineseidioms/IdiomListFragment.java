@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
@@ -31,6 +33,9 @@ public class IdiomListFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER = 0;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+
     @BindView(R.id.list)
     ListView listView;
 
@@ -42,6 +47,9 @@ public class IdiomListFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
 
         // Kick off the loader
         getActivity().getLoaderManager().initLoader(LOADER, null, this);
@@ -98,6 +106,11 @@ public class IdiomListFragment extends Fragment implements
             Uri currentIdiomUri = IdiomCollectionEntry.buildIdiomUriWithId(id);
             intent.setData(currentIdiomUri);
             startActivity(intent);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(id));
+            bundle.putString(FirebaseAnalytics.Param.CONTENT, "Idiom_ID" );
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
             // Override the transition
             getActivity().overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
