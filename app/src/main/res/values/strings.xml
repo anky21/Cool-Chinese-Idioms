@@ -31,5 +31,7 @@
     <string name="cd_pronunciation">Pronunciation is</string>
     <string name="cd_unmark_as_favourite">Unmark as favourite</string>
     <string name="cd_mark_as_favourite">Mark as favourite</string>
+    <string name="cd_google_ads">Click to see Google ads</string>
 
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
