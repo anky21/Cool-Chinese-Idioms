@@ -5,8 +5,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:id="@+id/fragment_idiom_list"
         android:name="me.anky.coolchineseidioms.IdiomListFragment"
         android:layout_width="match_parent"

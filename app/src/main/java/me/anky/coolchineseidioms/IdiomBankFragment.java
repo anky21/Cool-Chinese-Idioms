@@ -41,10 +41,6 @@ public class IdiomBankFragment extends Fragment implements
     @BindView(R.id.empty_view)
     RelativeLayout mEmptyView;
 
-    public IdiomBankFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

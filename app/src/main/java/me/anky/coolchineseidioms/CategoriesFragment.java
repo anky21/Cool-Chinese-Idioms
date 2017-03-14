@@ -25,14 +25,9 @@ import me.anky.coolchineseidioms.utilities.IdiomCategoryAdapter;
  */
 public class CategoriesFragment extends Fragment {
     private IdiomCategoryAdapter idiomCategoryAdapter;
-    private ArrayList<IdiomCategory> categoryList;
 
     @BindView(R.id.category_listview)
     ListView listView;
-
-    public CategoriesFragment() {
-        // Required empty public constructor
-    }
 
     IdiomCategory[] idiomCategories = {
             new IdiomCategory("Containing Numbers", IdiomCollectionEntry.COLUMN_CONTAIN_NUMBERS + " =1"),
@@ -47,7 +42,7 @@ public class CategoriesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
         ButterKnife.bind(this, rootView);
 
-        categoryList = new ArrayList<>(Arrays.asList(idiomCategories));
+        ArrayList<IdiomCategory> categoryList = new ArrayList<>(Arrays.asList(idiomCategories));
         idiomCategoryAdapter = new IdiomCategoryAdapter(getActivity(), categoryList);
         listView.setAdapter(idiomCategoryAdapter);
 

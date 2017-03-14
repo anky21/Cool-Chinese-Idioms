@@ -8,10 +8,10 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="@dimen/margin_2dp"
-    android:paddingLeft="@dimen/margin_4dp"
-    android:paddingStart="@dimen/margin_4dp"
-    android:paddingRight="@dimen/margin_4dp"
     android:paddingEnd="@dimen/margin_4dp"
+    android:paddingLeft="@dimen/margin_4dp"
+    android:paddingRight="@dimen/margin_4dp"
+    android:paddingStart="@dimen/margin_4dp"
     android:paddingTop="@dimen/margin_2dp">
 
     <LinearLayout
@@ -57,6 +57,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/cd_sound_play_button"
                     android:src="@drawable/ic_sound_green" />
             </FrameLayout>
         </LinearLayout>
@@ -66,10 +67,10 @@
         android:id="@+id/idiom_meaning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/margin_4dp"
-        android:paddingStart="@dimen/margin_4dp"
-        android:paddingRight="@dimen/margin_4dp"
         android:paddingEnd="@dimen/margin_4dp"
+        android:paddingLeft="@dimen/margin_4dp"
+        android:paddingRight="@dimen/margin_4dp"
+        android:paddingStart="@dimen/margin_4dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/text_or_icons_color"
         tools:text="Should one desire to sing, one would amaze the world with his first song." />

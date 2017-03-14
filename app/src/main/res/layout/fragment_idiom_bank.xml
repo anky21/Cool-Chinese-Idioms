@@ -19,16 +19,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/chengyu1"/>
+            android:contentDescription="@string/cd_empty_view"
+            android:src="@drawable/chengyu1" />
 
         <TextView
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/empty_view_image"
             android:layout_centerHorizontal="true"
+            android:contentDescription="@string/msg_add_favourite_idioms"
             android:paddingTop="@dimen/margin_16dp"
-            android:textColor="@color/primary_text_color"
+            android:text="@string/msg_add_favourite_idioms"
             android:textAppearance="?android:textAppearanceMedium"
-            android:text="@string/msg_add_favourite_idioms" />
+            android:textColor="@color/primary_text_color" />
     </RelativeLayout>
 </RelativeLayout>

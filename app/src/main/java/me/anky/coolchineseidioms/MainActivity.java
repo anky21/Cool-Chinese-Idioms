@@ -20,7 +20,6 @@ import me.anky.coolchineseidioms.utilities.MainScreenFragmentAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private FirebaseAnalytics mFirebaseAnalytics;
     IdiomCollectionDbHelper dbHelper = null;
     private TabLayout tabLayout;
     private int[] tabIcons = {
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mAdView.setContentDescription(getString(R.string.cd_google_ads));
 
         // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Copy prepopulated database to internal storage
         dbHelper = new IdiomCollectionDbHelper(this);

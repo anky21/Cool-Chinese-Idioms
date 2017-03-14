@@ -106,18 +106,6 @@ public class DetailFragment extends Fragment implements
     private String mIdiomName;
     private String mIdiomAudio;
     private String mYoutubeKey;
-    private String mPinyin1;
-    private String mTranslation;
-    private String mExplanationEng;
-    private String mExample1;
-    private String mExample1Eng;
-    private String mExample2;
-    private String mExample2Eng;
-    private String mExample3;
-    private String mExample3Eng;
-    private String mEg1Audioid;
-    private String mEg2Audioid;
-    private String mEg3Audioid;
 
     /**
      * Content URI for the current idiom
@@ -128,10 +116,6 @@ public class DetailFragment extends Fragment implements
      * Identifier for the current idiom loader
      */
     private static final int CURRENT_IDIOM_LOADER = 7;
-
-    public DetailFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -198,20 +182,20 @@ public class DetailFragment extends Fragment implements
         if (cursor.moveToFirst()) {
             mIdiomId = cursor.getString(Utilities.COL_IDIOM_ID);
             mIdiomName = cursor.getString(Utilities.COL_IDIOM_NAME);
-            mPinyin1 = cursor.getString(Utilities.COL_PINYIN1);
-            mTranslation = cursor.getString(Utilities.COL_TRANSLATION);
-            mExplanationEng = cursor.getString(Utilities.COL_EXPLANATION_ENG);
-            mExample1 = cursor.getString(Utilities.COL_EXAMPLE1);
-            mExample1Eng = cursor.getString(Utilities.COL_EXAMPLE1_ENG);
-            mExample2 = cursor.getString(Utilities.COL_EXAMPLE2);
-            mExample2Eng = cursor.getString(Utilities.COL_EXAMPLE2_ENG);
-            mExample3 = cursor.getString(Utilities.COL_EXAMPLE3);
-            mExample3Eng = cursor.getString(Utilities.COL_EXAMPLE3_ENG);
+            String mPinyin1 = cursor.getString(Utilities.COL_PINYIN1);
+            String mTranslation = cursor.getString(Utilities.COL_TRANSLATION);
+            String mExplanationEng = cursor.getString(Utilities.COL_EXPLANATION_ENG);
+            String mExample1 = cursor.getString(Utilities.COL_EXAMPLE1);
+            String mExample1Eng = cursor.getString(Utilities.COL_EXAMPLE1_ENG);
+            String mExample2 = cursor.getString(Utilities.COL_EXAMPLE2);
+            String mExample2Eng = cursor.getString(Utilities.COL_EXAMPLE2_ENG);
+            String mExample3 = cursor.getString(Utilities.COL_EXAMPLE3);
+            String mExample3Eng = cursor.getString(Utilities.COL_EXAMPLE3_ENG);
             mIdiomAudio = cursor.getString(Utilities.COL_AUDIO_FILE);
             mYoutubeKey = cursor.getString(Utilities.COL_YOUTUBE);
-            mEg1Audioid = cursor.getString(Utilities.COL_EXAMPLE1_AUDIO);
-            mEg2Audioid = cursor.getString(Utilities.COL_EXAMPLE2_AUDIO);
-            mEg3Audioid = cursor.getString(Utilities.COL_EXAMPLE3_AUDIO);
+            String mEg1Audioid = cursor.getString(Utilities.COL_EXAMPLE1_AUDIO);
+            String mEg2Audioid = cursor.getString(Utilities.COL_EXAMPLE2_AUDIO);
+            String mEg3Audioid = cursor.getString(Utilities.COL_EXAMPLE3_AUDIO);
 
             mCollapsingToolBar.setTitle(mIdiomName);
 

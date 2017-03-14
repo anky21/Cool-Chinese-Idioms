@@ -72,9 +72,6 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
     @BindView(R.id.all_idioms_course)
     TextView allIdiomsCourse;
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

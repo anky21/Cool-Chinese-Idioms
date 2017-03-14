@@ -18,7 +18,6 @@ import static me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry;
  */
 
 public class DailyIdiomAsyncTask extends AsyncTask<Context, Void, Void> {
-    private Context context;
     public OnTaskCompleted listener = null;
 
     // Projection
@@ -37,7 +36,7 @@ public class DailyIdiomAsyncTask extends AsyncTask<Context, Void, Void> {
 
     @Override
     protected Void doInBackground(Context... params) {
-        context = params[0];
+        Context context = params[0];
         // Create a random number (aka idiom ID) depending on the number of idioms in the database
         int rnd = CreateRandomNumber.createRandomNumber();
 

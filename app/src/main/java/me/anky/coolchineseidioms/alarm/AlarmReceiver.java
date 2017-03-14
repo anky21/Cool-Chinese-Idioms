@@ -16,11 +16,6 @@ import java.util.Calendar;
  */
 
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-    // The app's AlarmManager, which provides access to the system alarm services.
-    private AlarmManager alarmMgr;
-    // The pending intent that is triggered when the alarm fires.
-    private PendingIntent alarmIntent;
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent service = new Intent(context, SchedulingService.class);
@@ -36,9 +31,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      * @param context
      */
     public void setAlarm(Context context) {
-        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         Calendar now = Calendar.getInstance();

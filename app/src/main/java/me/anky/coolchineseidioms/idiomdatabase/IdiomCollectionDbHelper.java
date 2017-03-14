@@ -105,6 +105,7 @@ public class IdiomCollectionDbHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         int v = cursor.getInt(0);
         db.close();
+        cursor.close();
         return v;
     }
 }

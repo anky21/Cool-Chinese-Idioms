@@ -41,9 +41,6 @@ public class IdiomListFragment extends Fragment implements
 
     IdiomListCursorAdapter mIdiomListCursorAdapter;
 
-    public IdiomListFragment() {
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
