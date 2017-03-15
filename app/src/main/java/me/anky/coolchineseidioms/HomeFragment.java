@@ -3,10 +3,12 @@ package me.anky.coolchineseidioms;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -37,6 +39,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     AlarmReceiver alarm = new AlarmReceiver();
+
+    private SharedPreferences mSharedPreferences;
 
     private String mDailyIdiomId;
 
@@ -85,15 +89,15 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
 
-        // When the app runs for the first time (the database is empty), run the AsyncTask
-        // and set the alarm
-        Cursor cursor = getContext().getContentResolver()
-                .query(DailyIdiomMEntry.CONTENT_URI, null, null, null, null);
-        if (!cursor.moveToFirst()) {
+        // When the app runs for the first time, run the AsyncTask and set the alarm
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        boolean app_started_before = mSharedPreferences.getBoolean(getString(R.string.app_started_before_key), false);
+        if(!app_started_before){
             new DailyIdiomAsyncTask(this).execute(getContext());
             alarm.setAlarm(getContext());
+            mSharedPreferences.edit().putBoolean(getString(R.string.app_started_before_key),
+                    true).apply();
         }
-        cursor.close();
 
         soundPlayIcon.setTag(R.drawable.ic_play_sound);
         // Set up OnClickListener for sound play button

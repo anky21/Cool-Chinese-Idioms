@@ -38,4 +38,7 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
+    <!-- Shared Preferences -->
+    <string name="app_started_before_key">app_started_before</string>
+
 </resources>

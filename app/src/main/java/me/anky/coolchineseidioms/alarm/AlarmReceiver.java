@@ -5,10 +5,14 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
 import java.util.Calendar;
+
+import me.anky.coolchineseidioms.R;
 
 /**
  * Created by Anky An on 9/03/2017.
@@ -42,9 +46,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         calendar.set(Calendar.HOUR_OF_DAY, 4);
         calendar.set(Calendar.MINUTE, 30);
 
-        // If the alarm starting time is in the past, start the alarm one day later
-        if (calendar.before(now)) {
-            calendar.add(Calendar.DATE, 1);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean app_started_before = sharedPreferences.getBoolean(context.getResources()
+                .getString(R.string.app_started_before_key), false);
+        if (!app_started_before) {
+            // After the app is installed for the first time, set the alarm to start one day later
+                calendar.add(Calendar.DATE, 1);
         }
 
         // Set the alarm to fire at approximately 4:30 a.m., according to the device's
