@@ -41,4 +41,10 @@
     <!-- Shared Preferences -->
     <string name="app_started_before_key">app_started_before</string>
 
+    <!-- Recorder buttons -->
+    <string name="button_listen">listen</string>
+    <string name="button_record">record</string>
+    <string name="button_play">play</string>
+    <string name="button_close">close</string>
+
 </resources>

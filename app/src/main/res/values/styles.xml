@@ -74,4 +74,12 @@
         <item name="android:paddingBottom">@dimen/margin_12dp</item>
     </style>
 
+    <!-- Style for media recorder buttons -->
+    <style name="RecorderButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_or_icons_color</item>
+        <item name="android:backgroundTint">@color/teal_500</item>
+    </style>
+
 </resources>

@@ -3,8 +3,8 @@
     package="me.anky.coolchineseidioms">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,40 +26,46 @@
             android:name=".idiomdatabase.IdiomCollectionProvider"
             android:authorities="me.anky.coolchineseidioms"
             android:exported="false" />
-
         <provider
             android:name=".userdata.UserProvider"
             android:authorities="me.anky.coolchineseidioms.user"
             android:exported="false" />
 
-        <activity android:name=".IdiomListActivity"
+        <activity
+            android:name=".IdiomListActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".DetailActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".DetailActivity"
             android:parentActivityName=".IdiomListActivity"
-            android:theme="@style/AppTheme.Details"></activity>
+            android:theme="@style/AppTheme.Details" />
         <!-- App Widget -->
         <receiver
             android:name=".widget.WidgetProvider"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="me.anky.coolchineseidioms.ACTION_DATA_UPDATED"/>
+                <action android:name="me.anky.coolchineseidioms.ACTION_DATA_UPDATED" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_info" />
         </receiver>
-        <service android:name=".widget.WidgetIntentService"/>
-        <service android:name=".utilities.MediaPlayerService"
-            android:exported="false"/>
+
+        <service android:name=".widget.WidgetIntentService" />
+        <service
+            android:name=".utilities.MediaPlayerService"
+            android:exported="false" />
         <!-- Alarm -->
-        <service android:name=".alarm.SchedulingService"/>
+        <service android:name=".alarm.SchedulingService" />
+
         <receiver android:name=".alarm.AlarmReceiver" />
-        <receiver android:name=".alarm.AlarmBootReceiver"
+        <receiver
+            android:name=".alarm.AlarmBootReceiver"
             android:enabled="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>
