@@ -17,12 +17,6 @@
         android:paddingTop="@dimen/margin_12dp">
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/button_listen"
-            style="@style/RecorderButton"
-            android:contentDescription="@string/button_listen"
-            android:text="@string/button_listen" />
-
-        <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_record"
             style="@style/RecorderButton"
             android:layout_marginEnd="@dimen/margin_16dp"
