@@ -25,9 +25,6 @@ public class RecordingFragment extends Fragment {
     @BindView(R.id.button_play)
     AppCompatButton mButtonPlay;
 
-    @BindView(R.id.button_close)
-    AppCompatButton mButtonClose;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

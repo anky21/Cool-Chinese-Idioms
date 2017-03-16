@@ -7,18 +7,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -32,7 +28,6 @@ import butterknife.ButterKnife;
 import me.anky.coolchineseidioms.utilities.MediaPlayerService;
 import me.anky.coolchineseidioms.utilities.Utilities;
 
-import static android.support.design.R.id.right;
 import static me.anky.coolchineseidioms.userdata.UserContract.FavouritesEntry;
 
 /**
@@ -40,12 +35,6 @@ import static me.anky.coolchineseidioms.userdata.UserContract.FavouritesEntry;
  */
 public class DetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
-
-    @BindView(R.id.collapsing_toolbar_layout)
-    CollapsingToolbarLayout mCollapsingToolBar;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
 
     @BindView(R.id.idiom_name_tv)
     TextView mIdiomNameTv;
@@ -133,30 +122,7 @@ public class DetailFragment extends Fragment implements
 
         setHasOptionsMenu(true);
 
-        // Set a Toolbar to act as the ActionBar for this Activity window
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-
-        // RTL support for the collapsing toolbar
-        boolean isRightToLeft = getResources().getBoolean(R.bool.is_right_to_left);
-        if (isRightToLeft) {
-            mCollapsingToolBar.setCollapsedTitleGravity(right);
-            mCollapsingToolBar.setExpandedTitleGravity(right);
-        }
-
         return rootView;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                getActivity().onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -196,8 +162,6 @@ public class DetailFragment extends Fragment implements
             String mEg1Audioid = cursor.getString(Utilities.COL_EXAMPLE1_AUDIO);
             String mEg2Audioid = cursor.getString(Utilities.COL_EXAMPLE2_AUDIO);
             String mEg3Audioid = cursor.getString(Utilities.COL_EXAMPLE3_AUDIO);
-
-            mCollapsingToolBar.setTitle(mIdiomName);
 
             // Check and set the favourite icon
             Utilities.setFavouriteIcon(context,Utilities.isFavourite(context, mIdiomId), mFavouriteIcon);

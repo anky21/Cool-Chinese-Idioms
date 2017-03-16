@@ -46,5 +46,6 @@
     <string name="button_record">record</string>
     <string name="button_play">play</string>
     <string name="button_close">close</string>
+    <string name="button_record_stop">stop</string>
 
 </resources>
