@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {
+    private RecordingFragment mRecordingFragment;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -26,7 +27,7 @@ public class DetailActivity extends AppCompatActivity {
     AdView mAdView;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
@@ -36,23 +37,31 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        mFab.setTag(R.drawable.ic_record_white);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check that the activity is using the layout version with
-                // the fragment_container FrameLayout
-                if (findViewById(R.id.fragment_container) != null) {
+                if ((int) mFab.getTag() == R.drawable.ic_record_white) {
+                    // Check that the activity is using the layout version with
+                    // the fragment_container FrameLayout
+                    if (findViewById(R.id.fragment_container) != null) {
 
-                    // Create a new Fragment to be placed in the activity layout
-                    RecordingFragment recordingFragment = new RecordingFragment();
+                        // Create a new Fragment to be placed in the activity layout
+                        mRecordingFragment = new RecordingFragment();
 
-                    // In case this activity was started with special instructions from an
-                    // Intent, pass the Intent's extras to the fragment as arguments
-//                    recordingFragment.setArguments(getIntent().getExtras());
-
-                    // Add the fragment to the 'fragment_container' FrameLayout
+                        // Add the fragment to the 'fragment_container' FrameLayout
+                        getSupportFragmentManager().beginTransaction()
+                                .add(R.id.fragment_container, mRecordingFragment)
+                                .commit();
+                        mFab.setImageResource(R.drawable.ic_close_white);
+                        mFab.setTag(R.drawable.ic_close_white);
+                    }
+                }else {
                     getSupportFragmentManager().beginTransaction()
-                            .add(R.id.fragment_container, recordingFragment).commit();
+                            .remove(mRecordingFragment)
+                            .commit();
+                    mFab.setImageResource(R.drawable.ic_record_white);
+                    mFab.setTag(R.drawable.ic_record_white);
                 }
             }
         });
