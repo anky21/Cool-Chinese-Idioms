@@ -6,16 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {
     private RecordingFragment mRecordingFragment;
+
+    private final static String RECORDING_FRAGMENT = "recording_fragment";
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -31,6 +31,14 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+        // Remove the fragment when the device is rotated
+        RecordingFragment recordingFragment = (RecordingFragment)getSupportFragmentManager()
+                .findFragmentByTag(RECORDING_FRAGMENT);
+        if(recordingFragment != null){
+            getSupportFragmentManager().beginTransaction()
+                    .remove(recordingFragment)
+                    .commit();
+        }
 
         // Set a Toolbar to act as the ActionBar for this Activity window
         setSupportActionBar(mToolbar);
@@ -38,33 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mFab.setTag(R.drawable.ic_record_white);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ((int) mFab.getTag() == R.drawable.ic_record_white) {
-                    // Check that the activity is using the layout version with
-                    // the fragment_container FrameLayout
-                    if (findViewById(R.id.fragment_container) != null) {
-
-                        // Create a new Fragment to be placed in the activity layout
-                        mRecordingFragment = new RecordingFragment();
-
-                        // Add the fragment to the 'fragment_container' FrameLayout
-                        getSupportFragmentManager().beginTransaction()
-                                .add(R.id.fragment_container, mRecordingFragment)
-                                .commit();
-                        mFab.setImageResource(R.drawable.ic_close_white);
-                        mFab.setTag(R.drawable.ic_close_white);
-                    }
-                }else {
-                    getSupportFragmentManager().beginTransaction()
-                            .remove(mRecordingFragment)
-                            .commit();
-                    mFab.setImageResource(R.drawable.ic_record_white);
-                    mFab.setTag(R.drawable.ic_record_white);
-                }
-            }
-        });
+        mFab.setOnClickListener(mFabOCL);
 
         // Initialise Google mobile ads SDK
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544~3347511713");
@@ -93,4 +75,35 @@ public class DetailActivity extends AppCompatActivity {
 
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
+
+    private View.OnClickListener mFabOCL = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if ((int) mFab.getTag() == R.drawable.ic_record_white) {
+                // Check that the activity is using the layout version with
+                // the fragment_container FrameLayout
+                if (findViewById(R.id.fragment_container) != null) {
+
+                    // Create a new Fragment to be placed in the activity layout
+                    mRecordingFragment = new RecordingFragment();
+
+                    // Add the fragment to the 'fragment_container' FrameLayout
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.fragment_container, mRecordingFragment, RECORDING_FRAGMENT)
+                            .commit();
+                    mFab.setImageResource(R.drawable.ic_close_white);
+                    mFab.setTag(R.drawable.ic_close_white);
+                }
+            }else {
+                RecordingFragment recordingFragment = (RecordingFragment)getSupportFragmentManager().findFragmentByTag(RECORDING_FRAGMENT);
+                if(recordingFragment != null){
+                    getSupportFragmentManager().beginTransaction()
+                            .remove(recordingFragment)
+                            .commit();
+                }
+                mFab.setImageResource(R.drawable.ic_record_white);
+                mFab.setTag(R.drawable.ic_record_white);
+            }
+        }
+    };
 }
