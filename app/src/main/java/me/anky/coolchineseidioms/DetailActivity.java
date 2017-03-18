@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,21 +33,21 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-        // Remove the fragment when the device is rotated
-        RecordingFragment recordingFragment = (RecordingFragment)getSupportFragmentManager()
-                .findFragmentByTag(RECORDING_FRAGMENT);
-        if(recordingFragment != null){
-            getSupportFragmentManager().beginTransaction()
-                    .remove(recordingFragment)
-                    .commit();
-        }
 
         // Set a Toolbar to act as the ActionBar for this Activity window
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        // Set the initial tag for the FAB image
         mFab.setTag(R.drawable.ic_record_white);
+        // If the fragment is put in savedInstanceState, then set the FAB accordingly
+        RecordingFragment recordingFragment = (RecordingFragment)getSupportFragmentManager()
+                .findFragmentByTag(RECORDING_FRAGMENT);
+        if(recordingFragment != null){
+            mFab.setImageResource(R.drawable.ic_close_white);
+            mFab.setTag(R.drawable.ic_close_white);
+        }
         mFab.setOnClickListener(mFabOCL);
 
         // Initialise Google mobile ads SDK
@@ -80,10 +82,6 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if ((int) mFab.getTag() == R.drawable.ic_record_white) {
-                // Check that the activity is using the layout version with
-                // the fragment_container FrameLayout
-                if (findViewById(R.id.fragment_container) != null) {
-
                     // Create a new Fragment to be placed in the activity layout
                     mRecordingFragment = new RecordingFragment();
 
@@ -93,7 +91,6 @@ public class DetailActivity extends AppCompatActivity {
                             .commit();
                     mFab.setImageResource(R.drawable.ic_close_white);
                     mFab.setTag(R.drawable.ic_close_white);
-                }
             }else {
                 RecordingFragment recordingFragment = (RecordingFragment)getSupportFragmentManager().findFragmentByTag(RECORDING_FRAGMENT);
                 if(recordingFragment != null){

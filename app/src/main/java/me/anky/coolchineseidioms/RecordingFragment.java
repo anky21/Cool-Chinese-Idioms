@@ -48,8 +48,10 @@ public class RecordingFragment extends Fragment {
         mFileName = getActivity().getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecord.3gp";
 
+//        mButtonRecord.setEnabled(true);
         mButtonRecord.setOnClickListener(mRecordOCL);
 
+//        mButtonPlay.setEnabled(false);
         mButtonPlay.setOnClickListener(mPlayOCL);
 
         return rootView;
@@ -137,6 +139,7 @@ public class RecordingFragment extends Fragment {
         public void onCompletion(MediaPlayer mediaPlayer) {
             stopPlaying();
             mButtonPlay.setText(R.string.button_play);
+            mButtonRecord.setEnabled(true);
         }
     };
 
@@ -154,6 +157,7 @@ public class RecordingFragment extends Fragment {
 
                     startRecording();
                     mButtonRecord.setText(R.string.button_record_stop);
+                    mButtonPlay.setEnabled(false);
 
                 } else {
                     requestPermission();
@@ -161,6 +165,7 @@ public class RecordingFragment extends Fragment {
             } else {
                 stopRecording();
                 mButtonRecord.setText(R.string.button_record);
+                mButtonPlay.setEnabled(true);
             }
         }
     };
@@ -173,9 +178,11 @@ public class RecordingFragment extends Fragment {
             if (playButtonText.equals(getString(R.string.button_play))) {
                 startPlaying();
                 mButtonPlay.setText(R.string.button_play_stop);
+                mButtonRecord.setEnabled(false);
             } else {
                 stopPlaying();
                 mButtonPlay.setText(R.string.button_play);
+                mButtonRecord.setEnabled(true);
             }
         }
     };
