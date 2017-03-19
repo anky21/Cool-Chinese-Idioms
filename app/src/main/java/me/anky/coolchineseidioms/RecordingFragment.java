@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -48,10 +49,8 @@ public class RecordingFragment extends Fragment {
         mFileName = getActivity().getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecord.3gp";
 
-//        mButtonRecord.setEnabled(true);
         mButtonRecord.setOnClickListener(mRecordOCL);
 
-//        mButtonPlay.setEnabled(false);
         mButtonPlay.setOnClickListener(mPlayOCL);
 
         return rootView;
@@ -75,6 +74,13 @@ public class RecordingFragment extends Fragment {
     }
 
     private void startRecording() {
+
+        // Remove the previous recorded audio if exists
+        File file = new File(mFileName);
+        if (file.exists()) {
+            file.delete();
+        }
+
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
