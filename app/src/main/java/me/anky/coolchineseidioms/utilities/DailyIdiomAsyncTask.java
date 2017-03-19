@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-import me.anky.randomnumber.CreateRandomNumber;
-
 import static me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
 import static me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry;
 
@@ -38,7 +36,7 @@ public class DailyIdiomAsyncTask extends AsyncTask<Context, Void, Void> {
     protected Void doInBackground(Context... params) {
         Context context = params[0];
         // Create a random number (aka idiom ID) depending on the number of idioms in the database
-        int rnd = CreateRandomNumber.createRandomNumber();
+        int rnd = Utilities.createRandomNumber();
 
         ContentResolver contentResolver = context.getContentResolver();
         // Build the uri with this idiom ID

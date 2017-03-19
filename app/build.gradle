@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 // Initialise the keystorePropertiesFile
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
-// Load your keystore.properties file into the keystoreProperties object.
+// Load keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
@@ -50,7 +50,6 @@ dependencies {
     compile "com.android.support:design:$supportLibVersion"
     compile "com.android.support:cardview-v7:${supportLibVersion}"
     compile "com.android.support:support-v4:${supportLibVersion}"
-    compile project(':randomnumber')
     compile "com.google.firebase:firebase-core:${firebaseVersion}"
     compile "com.google.firebase:firebase-messaging:${firebaseVersion}"
     compile "com.google.firebase:firebase-ads:${firebaseVersion}"

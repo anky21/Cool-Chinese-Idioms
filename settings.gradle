@@ -1,1 +1,1 @@
-include ':app', ':randomnumber'
+include ':app'

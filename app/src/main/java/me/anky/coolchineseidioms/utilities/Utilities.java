@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.widget.ImageView;
 
+import java.util.Random;
+
 import me.anky.coolchineseidioms.R;
 import me.anky.coolchineseidioms.idiomdatabase.IdiomCollectionContract.IdiomCollectionEntry;
 import me.anky.coolchineseidioms.userdata.UserContract.DailyIdiomMEntry;
@@ -15,6 +17,14 @@ import me.anky.coolchineseidioms.userdata.UserContract.FavouritesEntry;
  */
 
 public class Utilities {
+
+    // Create a random number
+    public static int createRandomNumber(){
+        int min = 1;
+        // The number of idioms in the database
+        int max = 20;
+        return new Random().nextInt(max - min + 1) + min;
+    }
 
     // Check if an idiom is favourite
     public static boolean isFavourite(Context context, String idiomId) {
