@@ -1,5 +1,6 @@
 package me.anky.coolchineseidioms;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -39,12 +40,20 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        Intent intent = getIntent();
+        if (intent.hasExtra(getString(R.string.detail_activity_title))
+                && intent.getStringExtra(getString(R.string.detail_activity_title)) != null) {
+            String title = intent.getStringExtra(getString(R.string.detail_activity_title));
+            getSupportActionBar().setTitle(title);
+        }
+
+
         // Set the initial tag for the FAB image
         mFab.setTag(R.drawable.ic_record_white);
         // If the fragment is put in savedInstanceState, then set the FAB accordingly
-        RecordingFragment recordingFragment = (RecordingFragment)getSupportFragmentManager()
+        RecordingFragment recordingFragment = (RecordingFragment) getSupportFragmentManager()
                 .findFragmentByTag(RECORDING_FRAGMENT);
-        if(recordingFragment != null){
+        if (recordingFragment != null) {
             mFab.setImageResource(R.drawable.ic_close_white);
             mFab.setTag(R.drawable.ic_close_white);
         }
@@ -82,18 +91,18 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if ((int) mFab.getTag() == R.drawable.ic_record_white) {
-                    // Create a new Fragment to be placed in the activity layout
-                    mRecordingFragment = new RecordingFragment();
+                // Create a new Fragment to be placed in the activity layout
+                mRecordingFragment = new RecordingFragment();
 
-                    // Add the fragment to the 'fragment_container' FrameLayout
-                    getSupportFragmentManager().beginTransaction()
-                            .add(R.id.fragment_container, mRecordingFragment, RECORDING_FRAGMENT)
-                            .commit();
-                    mFab.setImageResource(R.drawable.ic_close_white);
-                    mFab.setTag(R.drawable.ic_close_white);
-            }else {
-                RecordingFragment recordingFragment = (RecordingFragment)getSupportFragmentManager().findFragmentByTag(RECORDING_FRAGMENT);
-                if(recordingFragment != null){
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, mRecordingFragment, RECORDING_FRAGMENT)
+                        .commit();
+                mFab.setImageResource(R.drawable.ic_close_white);
+                mFab.setTag(R.drawable.ic_close_white);
+            } else {
+                RecordingFragment recordingFragment = (RecordingFragment) getSupportFragmentManager().findFragmentByTag(RECORDING_FRAGMENT);
+                if (recordingFragment != null) {
                     getSupportFragmentManager().beginTransaction()
                             .remove(recordingFragment)
                             .commit();

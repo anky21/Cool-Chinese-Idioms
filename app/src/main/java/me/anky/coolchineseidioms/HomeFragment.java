@@ -46,6 +46,8 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
 
     private String mDailyIdiomAudio;
 
+    private String mIdiomName;
+
     @BindView(R.id.idiom_of_the_day)
     TextView mIdiomOfTheDay;
 
@@ -138,14 +140,14 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
                 null);
         if (cursor.moveToFirst()) {
             mDailyIdiomId = cursor.getString(Utilities.COL_DAILY_IDIOM_ID);
-            String idiomName = cursor.getString(Utilities.COL_DAILY_IDIOM);
+            mIdiomName = cursor.getString(Utilities.COL_DAILY_IDIOM);
             mDailyIdiomAudio = cursor.getString(Utilities.COL_DAILY_IDIOM_AUDIO);
             String idiomTranslation = cursor.getString(Utilities.COL_DAILY_IDIOM_TRANSLATION);
-            mIdiomOfTheDay.setText(idiomName);
-            mIdiomOfTheDay.setContentDescription(idiomName);
+            mIdiomOfTheDay.setText(mIdiomName);
+            mIdiomOfTheDay.setContentDescription(mIdiomName);
             mIdiomTranslation.setText(idiomTranslation);
             mIdiomTranslation.setContentDescription(getString(R.string.cd_translation) + idiomTranslation);
-            soundPlayIconFrame.setContentDescription(getString(R.string.cd_sound_play_button) + idiomName);
+            soundPlayIconFrame.setContentDescription(getString(R.string.cd_sound_play_button) + mIdiomName);
 
             // Change background colour of the CardView
             cardView.setCardBackgroundColor(Color.WHITE);
@@ -259,6 +261,7 @@ public class HomeFragment extends Fragment implements OnTaskCompleted {
             Intent intent = new Intent(getContext(), DetailActivity.class);
             Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(mDailyIdiomId);
             intent.setData(currentIdiomUri);
+            intent.putExtra(getString(R.string.detail_activity_title), mIdiomName);
             startActivity(intent);
 
             Bundle bundle = new Bundle();

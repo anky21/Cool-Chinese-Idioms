@@ -65,6 +65,7 @@ public class WidgetIntentService extends IntentService {
             Intent upIntent = new Intent(this, MainActivity.class);
             Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(idiomId);
             launchIntent.setData(currentIdiomUri);
+            launchIntent.putExtra(getString(R.string.detail_activity_title), idiomName);
             // Create back stack when launching the Detail activity
             PendingIntent pendingIntent = TaskStackBuilder.create(this)
                     .addNextIntent(upIntent)

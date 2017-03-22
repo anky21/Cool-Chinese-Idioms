@@ -89,14 +89,17 @@ public class IdiomBankFragment extends Fragment implements
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Get idiom ID from the favourite table
             String idiomId = null;
+            String idiomName = null;
             Cursor cursor = (Cursor) parent.getItemAtPosition(position);
             if(cursor != null){
                 idiomId = cursor.getString(Utilities.COL_IDIOM_ID);
+                idiomName = cursor.getString(Utilities.COL_IDIOM_NAME);
             }
 
             Intent intent = new Intent(getContext(), DetailActivity.class);
             Uri currentIdiomUri = IdiomCollectionEntry.buildUriWithStringId(idiomId);
             intent.setData(currentIdiomUri);
+            intent.putExtra(getString(R.string.detail_activity_title), idiomName);
             startActivity(intent);
 
             // Override the transition

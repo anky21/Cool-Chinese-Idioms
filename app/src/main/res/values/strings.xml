@@ -46,5 +46,6 @@
     <string name="button_play">Start Playing</string>
     <string name="button_record_stop">Stop Recording</string>
     <string name="button_play_stop">Stop Playing</string>
+    <string name="detail_activity_title">title</string>
 
 </resources>

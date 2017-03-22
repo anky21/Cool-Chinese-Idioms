@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -34,7 +35,6 @@ public class IdiomListFragment extends Fragment implements
     private static final int LOADER = 0;
 
     private FirebaseAnalytics mFirebaseAnalytics;
-
 
     @BindView(R.id.list)
     ListView listView;
@@ -99,9 +99,13 @@ public class IdiomListFragment extends Fragment implements
     private AdapterView.OnItemClickListener mListViewItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            TextView idiomNameTv = (TextView) view.findViewById(R.id.idiom_name);
+            String idiomName = idiomNameTv.getText().toString();
+
             Intent intent = new Intent(getContext(), DetailActivity.class);
             Uri currentIdiomUri = IdiomCollectionEntry.buildIdiomUriWithId(id);
             intent.setData(currentIdiomUri);
+            intent.putExtra(getString(R.string.detail_activity_title), idiomName);
             startActivity(intent);
 
             Bundle bundle = new Bundle();
